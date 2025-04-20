@@ -21,7 +21,7 @@ import {
 } from "@tanstack/react-table"
 import * as React from "react"
 
-import { DataTablePagination } from "@/app/payments/pagination"
+import { DataTablePagination } from "@/components/table-elements/pagination"
 import { Button } from "@/components/ui/button"
 import {
     Table,

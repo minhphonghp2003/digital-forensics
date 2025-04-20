@@ -1,8 +1,9 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
 
+import { DataTableColumnHeader } from "@/components/table-elements/column-header"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -12,7 +13,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { DataTableColumnHeader } from "@/app/payments/column-header"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
