@@ -7,7 +7,7 @@ function NavBar() {
         <nav>
             <div className="fixed top-0  w-full z-40 flex justify-between items-center p-4 bg-white shadow-md ">
                 <h1 className="text-2xl font-bold">
-                    <Link href="/" className="flex items-center gap-2 text-orange-500">
+                    <Link href="/" className="flex items-center gap-2 ">
                         Phong Digital forensics
                     </Link>
                 </h1>

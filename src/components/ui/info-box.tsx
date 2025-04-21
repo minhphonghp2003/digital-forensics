@@ -11,7 +11,7 @@ function infoBox({ className, data, title }: { data: any, className?: string, ti
                     return (
                         <div key={index} className="flex gap-10 flex-row my-3 justify-between">
                             <p className="">{item.title}</p>
-                            <p className="text-end text-orange-400">{item.value}</p>
+                            <p className="text-end ">{item.value}</p>
                         </div>
                     )
                 }

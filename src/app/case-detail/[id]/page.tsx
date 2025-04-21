@@ -15,7 +15,7 @@ function page() {
 
                 </p>
                 <p>
-                    Title: <span className='text-orange-400'>
+                    Title: <span className=''>
                         This is a title of the case that is being created. It is a long title that will be used to test the case creation process.
                     </span>
                 </p>
