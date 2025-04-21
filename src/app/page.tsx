@@ -48,10 +48,10 @@ export default function Home() {
 
       </div>
       <div>
-        <CustomTable btnName="Add" onBtnClicked={(data: any) => {
+        <CustomTable searchKey="id" btnName="Add" onBtnClicked={(data: any) => {
           console.log("hi");
         }} columns={caseColumns} title="All cases" data={data} />
-        <CustomTable btnName="Add" columns={evidenceColumns} title="All hardware" data={data} />
+        <CustomTable searchKey="id" btnName="Add" columns={evidenceColumns} title="All hardware" data={data} />
       </div>
     </>
   );
