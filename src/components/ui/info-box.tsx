@@ -3,7 +3,7 @@ import { BsBox } from "react-icons/bs";
 function infoBox({ className, data, title }: { data: any, className?: string, title?: string }) {
 
     return (
-        <div className={`shadow-xl w-full p-7  rounded-lg   ${className}`}>
+        <div className={`shadow-xl p-7  rounded-lg   ${className}`}>
             <p className="flex items-center gap-2 font-bold my-4 text-xl"><BsBox color="orange" />
                 {title}</p>
             <div>

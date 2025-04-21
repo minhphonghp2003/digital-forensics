@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <div className={`flex justify-between gap-4 p-9 `}>
+      <div className={`flex justify-between gap-4  `}>
         <InfoBox title="My account" data={[{
           title: "title1",
           value: "value"
