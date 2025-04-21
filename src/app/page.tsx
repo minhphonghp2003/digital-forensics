@@ -2,7 +2,6 @@
 import CustomTable from "@/components/ui/custom-table";
 import InfoBox from "@/components/ui/info-box";
 import { caseColumns } from "@/core/table-column/case-column";
-import { evidenceColumns } from "@/core/table-column/evidence-column";
 
 
 export default function Home() {
@@ -20,38 +19,50 @@ export default function Home() {
 
   return (
     <>
-      <div className={`flex justify-between gap-4  `}>
+      <div className={`flex justify-between gap-4 my-6 `}>
         <InfoBox title="My account" data={[{
-          title: "title1",
-          value: "value"
+          title: "Nickname",
+          value: "Nickname"
         },
         {
-          title: "title2",
-          value: "value"
+          title: "Total cases",
+          value: "12"
         },
         {
-          title: "title3",
-          value: "value"
-        }]} className=" w-full" ></InfoBox>
+          title: "Closed cases",
+          value: "2"
+        },
+        {
+          title: "Created at",
+          value: Date.now().toString()
+        },
+
+        ]} className=" w-full" ></InfoBox>
         <InfoBox title="Latest case" data={[{
-          title: "title1",
-          value: "value"
+          title: "ID",
+          value: "728ed52f"
         },
         {
-          title: "title2",
-          value: "value"
+          title: "Title",
+          value: "Phong first case"
         },
         {
-          title: "title3",
-          value: "value"
-        }]} className=" w-full" ></InfoBox>
+          title: "Description",
+          value: "This is a description of the case that is being created. It is a long description that will be used to test the case creation process."
+        },
+        {
+          title: "Created at",
+          value: Date.now().toString()
+        },
+
+        ]} className=" w-full" ></InfoBox>
 
       </div>
       <div>
         <CustomTable searchKey="id" btnName="Add" onBtnClicked={(data: any) => {
           console.log("hi");
         }} columns={caseColumns} title="All cases" data={data} />
-        <CustomTable searchKey="id" btnName="Add" columns={evidenceColumns} title="All hardware" data={data} />
+
       </div>
     </>
   );
