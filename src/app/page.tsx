@@ -1,64 +1,58 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import CustomTable from "@/components/ui/custom-table";
+import InfoBox from "@/components/ui/info-box";
+import { caseColumns } from "@/core/table-column/case-column";
+import { evidenceColumns } from "@/core/table-column/evidence-column";
 
 
 export default function Home() {
 
+  let data = Array.from({ length: 25 }, (_, i) => {
+    return {
+      id: "728ed52f",
+      title: "title" + i,
+      description: "description",
+      status: "pending",
+      createdAt: "2023-10-01",
+    }
+  })
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <p className="text-3xl font-bold underline">
+    <>
+      <div className={`flex justify-between gap-4 p-9 `}>
+        <InfoBox title="My account" data={[{
+          title: "title1",
+          value: "value"
+        },
+        {
+          title: "title2",
+          value: "value"
+        },
+        {
+          title: "title3",
+          value: "value"
+        }]} className=" w-full" ></InfoBox>
+        <InfoBox title="Latest case" data={[{
+          title: "title1",
+          value: "value"
+        },
+        {
+          title: "title2",
+          value: "value"
+        },
+        {
+          title: "title3",
+          value: "value"
+        }]} className=" w-full" ></InfoBox>
 
-          helo world
-          <Button>Click me</Button>
-
-        </p>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+      <div>
+        <CustomTable btnName="Add" onBtnClicked={(data: any) => {
+          console.log("hi");
+        }} columns={caseColumns} title="All cases" data={data} />
+        <CustomTable btnName="Add" columns={evidenceColumns} title="All hardware" data={data} />
+      </div>
+    </>
   );
 }
