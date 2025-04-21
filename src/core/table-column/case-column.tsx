@@ -15,6 +15,7 @@ import {
 import { Case } from "@/core/model/case/case.model"
 
 import { MoreHorizontal } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 
 export const caseColumns: ColumnDef<Case>[] = [
@@ -46,6 +47,8 @@ export const caseColumns: ColumnDef<Case>[] = [
         id: "actions",
         cell: ({ row }) => {
             let caseDetail = row.original
+            const router = useRouter();
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -62,7 +65,10 @@ export const caseColumns: ColumnDef<Case>[] = [
                             Copy ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View details</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {
+                            router.push('/case-detail/' + caseDetail.id);
+
+                        }}>View details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
