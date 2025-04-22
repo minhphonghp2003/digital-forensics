@@ -1,6 +1,8 @@
 "use client";
 import CustomTab from '@/components/ui/custom-tab';
+import CustomTable from '@/components/ui/custom-table';
 import InfoBox from '@/components/ui/info-box';
+import { evidenceColumns } from '@/core/table-column/evidence-column';
 import { useParams } from 'next/navigation';
 import { CiEdit } from "react-icons/ci";
 
@@ -64,19 +66,107 @@ function page() {
                 <CustomTab tabs={[
                     {
                         title: "Hardware",
-                        content: <p className='text-gray-500'>This is the hardware tab</p>
+                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Hardware" columns={evidenceColumns} data={[
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                        ]} searchKey={'id'} /></div>
                     },
                     {
                         title: "Device",
-                        content: <p className='text-gray-500'>This is the device tab</p>
+                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Device" columns={evidenceColumns} data={[
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                        ]} searchKey={'id'} /></div>
                     },
                     {
                         title: "Network",
-                        content: <p className='text-gray-500'>This is the network tab</p>
+                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Network" columns={evidenceColumns} data={[
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                        ]} searchKey={'id'} /></div>
                     },
                     {
                         title: "Log",
-                        content: <p className='text-gray-500'>This is the log tab</p>
+                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Log" columns={evidenceColumns} data={[
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                            {
+                                id: "728ed52f",
+                                title: "title",
+                                description: "description",
+                                status: "pending",
+                                createdAt: "2023-10-01",
+                            },
+                        ]} searchKey={'id'} /></div>
                     }
                 ]} />
             </div>

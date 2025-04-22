@@ -61,7 +61,11 @@ export const evidenceColumns: ColumnDef<Case>[] = [
                             Copy ID
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View details</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => {
+                                alert("Edit")
+                            }}
+                        >View details</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )
