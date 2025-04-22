@@ -1,4 +1,4 @@
-import AppContext from "@/app/app-context";
+import AppContextProvider from "@/app/app-context";
 import NavBar from "@/components/nav-bar";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -28,12 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
-        <AppContext>
+        <AppContextProvider>
           <NavBar />
           <div className="container mx-auto p-4 mt-16">
             {children}
           </div>
-        </AppContext>
+        </AppContextProvider>
       </body>
     </html>
   );
