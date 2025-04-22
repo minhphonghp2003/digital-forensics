@@ -1,4 +1,5 @@
 "use client";
+import CustomTab from '@/components/ui/custom-tab';
 import InfoBox from '@/components/ui/info-box';
 import { useParams } from 'next/navigation';
 import { CiEdit } from "react-icons/ci";
@@ -58,6 +59,26 @@ function page() {
 
                 ]} className=" w-full" ></InfoBox>
 
+            </div>
+            <div>
+                <CustomTab tabs={[
+                    {
+                        title: "Hardware",
+                        content: <p className='text-gray-500'>This is the hardware tab</p>
+                    },
+                    {
+                        title: "Device",
+                        content: <p className='text-gray-500'>This is the device tab</p>
+                    },
+                    {
+                        title: "Network",
+                        content: <p className='text-gray-500'>This is the network tab</p>
+                    },
+                    {
+                        title: "Log",
+                        content: <p className='text-gray-500'>This is the log tab</p>
+                    }
+                ]} />
             </div>
         </div>
     )
