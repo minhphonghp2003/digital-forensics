@@ -28,7 +28,7 @@ export let connectWallet = async () => {
     }
 }
 export let checkConnection = async () => {
-  
+
     if (window.ethereum) {
         const provider = new ethers.BrowserProvider(window.ethereum);
         await provider.send("eth_requestAccounts", []);
@@ -42,4 +42,12 @@ export let checkConnection = async () => {
         }
     }
     return null;
+}
+export let getOwner = async (contract: any) => {
+    const owner = await contract.owner();
+    return owner;
+}
+export let checkIsOwner = async (contract: any, address: string) => {
+    const owner = await getOwner(contract);
+    return owner.toLowerCase() === address.toLowerCase();
 }

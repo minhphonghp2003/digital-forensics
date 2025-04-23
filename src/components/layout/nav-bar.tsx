@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AccountContext } from "@/core/context/account.context";
 import { Investigator } from "@/core/model/investigator/investigator.model";
-import { connectWallet } from "@/service/ether.service";
+import { checkIsOwner, connectWallet } from "@/service/ether.service";
 import { addInvestigator, getInvestigator, updateInvestigator } from "@/service/investigator.service";
 import { Button } from "components/ui/button";
 import Link from "next/link";
@@ -27,12 +27,15 @@ function NavBar() {
     const [openAdd, setOpenAdd] = useState(false);
     const [addAddress, setAddAddress] = useState<any>();
     const [addNickname, setAddNickname] = useState<any>();
+    const [isOwner, setIsOwner] = useState(false)
     const fetchUser = async () => {
         if (account) {
             let result = await getInvestigator(account.contract, account.address);
             if (result) {
                 setNickname(result.nickname);
                 setUser(result);
+                let checkOwner = await checkIsOwner(account.contract, account.address);
+                setIsOwner(checkOwner);
             }
         }
     }
@@ -103,9 +106,12 @@ function NavBar() {
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuGroup>
-                                        <DropdownMenuItem onClick={() => { setOpenAdd(true) }}>Add investigator</DropdownMenuItem>
-                                    </DropdownMenuGroup>
+                                    {
+                                        isOwner && <DropdownMenuGroup>
+                                            <DropdownMenuItem onClick={() => { setOpenAdd(true) }}>Add investigator</DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                    }
+
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </li>
@@ -134,7 +140,7 @@ function NavBar() {
                                     </DialogFooter>
                                 </DialogContent>
                             </Dialog>
-                            <Dialog open={openAdd} onOpenChange={setOpenAdd}>
+                            <Dialog open={openAdd && isOwner} onOpenChange={setOpenAdd}>
                                 <DialogContent className="sm:max-w-[425px]">
                                     <DialogHeader>
                                         <DialogTitle>Add investigator</DialogTitle>
