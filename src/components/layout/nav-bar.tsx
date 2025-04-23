@@ -6,15 +6,15 @@ import {
     DialogContent,
     DialogFooter,
     DialogHeader,
-    DialogTitle,
-    DialogTrigger
+    DialogTitle
 } from "@/components/ui/dialog";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AccountContext } from "@/core/context/account.context";
 import { Investigator } from "@/core/model/investigator/investigator.model";
 import { connectWallet } from "@/service/ether.service";
-import { getInvestigator, updateInvestigator } from "@/service/investigator.service";
+import { addInvestigator, getInvestigator, updateInvestigator } from "@/service/investigator.service";
 import { Button } from "components/ui/button";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
@@ -24,6 +24,9 @@ function NavBar() {
     const [user, setUser] = useState<Investigator | null>(null)
     const [nickname, setNickname] = useState<string>("")
     const [open, setOpen] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
+    const [addAddress, setAddAddress] = useState<any>();
+    const [addNickname, setAddNickname] = useState<any>();
     const fetchUser = async () => {
         if (account) {
             let result = await getInvestigator(account.contract, account.address);
@@ -60,6 +63,17 @@ function NavBar() {
 
         }
     }
+    async function handleAddInvestigator() {
+        let tx = await addInvestigator({
+            contract: account.contract,
+            investigator: addAddress,
+            nickname: addNickname
+        });
+        console.log(tx);
+        setOpenAdd(false);
+
+    }
+
     return (
         <nav>
 
@@ -76,11 +90,28 @@ function NavBar() {
                             <Input placeholder="Search..." />
                         </li>
                         <li>
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="outline">{user?.nickname ?? "Anonymous"}</Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="w-56">
+                                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem onClick={() => { setOpen(true) }}>
+                                            Profile
+                                        </DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuGroup>
+                                        <DropdownMenuItem onClick={() => { setOpenAdd(true) }}>Add investigator</DropdownMenuItem>
+                                    </DropdownMenuGroup>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+                        </li>
+                        <li>
 
                             <Dialog open={open} onOpenChange={setOpen}>
-                                <DialogTrigger asChild>
-                                    <Button variant="outline"> {user?.nickname ?? "Anonymous"}</Button>
-                                </DialogTrigger>
                                 <DialogContent className="sm:max-w-[425px]">
                                     <DialogHeader>
                                         <DialogTitle>Edit profile</DialogTitle>
@@ -98,6 +129,35 @@ function NavBar() {
                                     <DialogFooter>
                                         <Button onClick={() => {
                                             handleUpdate()
+
+                                        }} type="submit">Save changes</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
+                            <Dialog open={openAdd} onOpenChange={setOpenAdd}>
+                                <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                        <DialogTitle>Add investigator</DialogTitle>
+
+                                    </DialogHeader>
+                                    <div className="grid gap-4 py-4">
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Label htmlFor="name" className="text-right">
+                                                Address
+                                            </Label>
+                                            <Input value={addAddress} onChange={e => setAddAddress(e.target.value)} id="name" className="col-span-3" />
+                                        </div>
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Label htmlFor="name" className="text-right">
+                                                Nickname
+                                            </Label>
+                                            <Input value={addNickname} onChange={e => setAddNickname(e.target.value)} id="name" className="col-span-3" />
+                                        </div>
+
+                                    </div>
+                                    <DialogFooter>
+                                        <Button onClick={() => {
+                                            handleAddInvestigator()
 
                                         }} type="submit">Save changes</Button>
                                     </DialogFooter>
