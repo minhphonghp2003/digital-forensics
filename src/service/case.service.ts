@@ -47,19 +47,19 @@ export let updateCase = async ({
     caseId,
     title,
     description,
-  }: any) => {
+}: any) => {
     const tx = await contract.updateCase(caseId, title, description);
     await tx.wait();
     return tx;
-  };
-  
-  // Update Case Status
-  export let updateCaseStatus = async ({
+};
+
+// Update Case Status
+export let updateCaseStatus = async ({
     contract,
     caseId,
     newStatus,
-  }: any) => {
+}: any) => {
     const tx = await contract.updateCaseStatus(caseId, newStatus);
     await tx.wait();
     return tx;
-  };
+};
