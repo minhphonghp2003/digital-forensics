@@ -1,38 +1,63 @@
 
 "use client"
 
+import {
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { abi } from "@/core/abi";
+import { Label } from "@/components/ui/label";
 import { AccountContext } from "@/core/context/account.context";
+import { Investigator } from "@/core/model/investigator/investigator.model";
+import { connectWallet } from "@/service/ether.service";
+import { getInvestigator, updateInvestigator } from "@/service/investigator.service";
 import { Button } from "components/ui/button";
-import { ethers } from "ethers";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 function NavBar() {
 
     const { account, setAccount } = useContext(AccountContext);
-    async function connectWallet() {
-        if (window.ethereum) {
-            try {
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                await provider.send("eth_requestAccounts", []);
-                const signer = await provider.getSigner();
-                const address = await signer.getAddress();
-                const contractAddress = "0x217A7086aECbCFA9c8D02022D99e355b74A9368A";
-                const contractABI = abi;
-
-                const contract = new ethers.Contract(contractAddress, contractABI, signer);
-                setAccount({
-                    address: address,
-                    signer: signer,
-                    contract: contract
-                });
-
-            } catch (error) {
-                console.error("User rejected request", error);
+    const [user, setUser] = useState<Investigator | null>(null)
+    const [nickname, setNickname] = useState<string>("")
+    const [open, setOpen] = useState(false);
+    const fetchUser = async () => {
+        if (account) {
+            let result = await getInvestigator(account.contract, account.address);
+            if (result) {
+                setNickname(result.nickname);
+                setUser(result);
             }
-        } else {
-            console.error("No Metamask detected");
+        }
+    }
+    useEffect(() => {
+        if (account) {
+            fetchUser()
+        }
+    }, [account])
+    async function connect() {
+        try {
+            let { address, signer, contract }: any = await connectWallet();
+            setAccount({
+                address: address,
+                signer: signer,
+                contract: contract
+            });
+
+        } catch (error) {
+            console.error("User rejected request", error);
+        }
+
+    }
+    let handleUpdate = async () => {
+        if (account) {
+            let tx = await updateInvestigator(account.contract, nickname);
+            setOpen(false);
+            fetchUser()
+
         }
     }
     return (
@@ -51,10 +76,36 @@ function NavBar() {
                             <Input placeholder="Search..." />
                         </li>
                         <li>
-                            Phong
+
+                            <Dialog open={open} onOpenChange={setOpen}>
+                                <DialogTrigger asChild>
+                                    <Button variant="outline"> {user?.nickname ?? "Anonymous"}</Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-[425px]">
+                                    <DialogHeader>
+                                        <DialogTitle>Edit profile</DialogTitle>
+
+                                    </DialogHeader>
+                                    <div className="grid gap-4 py-4">
+                                        <div className="grid grid-cols-4 items-center gap-4">
+                                            <Label htmlFor="name" className="text-right">
+                                                Nickname
+                                            </Label>
+                                            <Input value={nickname} onChange={e => setNickname(e.target.value)} id="name" className="col-span-3" />
+                                        </div>
+
+                                    </div>
+                                    <DialogFooter>
+                                        <Button onClick={() => {
+                                            handleUpdate()
+
+                                        }} type="submit">Save changes</Button>
+                                    </DialogFooter>
+                                </DialogContent>
+                            </Dialog>
                         </li>
                     </ul> : <Button onClick={() => {
-                        connectWallet()
+                        connect()
                     }}>Connect</Button>
                 }
             </div> :

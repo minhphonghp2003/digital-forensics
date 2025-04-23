@@ -1,7 +1,13 @@
-import InfoBox from '@/components/ui/info-box'
-import React from 'react'
+import InfoBox from '@/components/ui/info-box';
+import { AccountContext } from '@/core/context/account.context';
+import { useContext, useEffect } from 'react';
 
 function BasicInfo() {
+    let { account, setAccount } = useContext(AccountContext)
+    useEffect(() => {
+
+    }, [account])
+
     return (
         <div>       <div className={`flex justify-between gap-4 my-6 `}>
             <InfoBox title="My account" data={[{

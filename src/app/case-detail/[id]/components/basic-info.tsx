@@ -1,6 +1,11 @@
-import InfoBox from '@/components/ui/info-box'
+"use client"
+import InfoBox from '@/components/ui/info-box';
+import { AccountContext } from '@/core/context/account.context';
+import { useContext, useEffect } from 'react';
 
 function BasicCaseInfo() {
+   
+
     return (
         <div>  <div className={`flex justify-between gap-4 my-6 `}>
             <InfoBox title="Overview" data={[{
