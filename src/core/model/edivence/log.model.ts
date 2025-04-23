@@ -1,8 +1,8 @@
-import { LogType, SecurityLevel, Status } from "@/app/utils/enum";
+import { LogType, SecurityLevel, Status } from "@/utils/enum";
 
 export interface Log {
-    id: number;
-    caseId: number;
+    id: string;
+    caseId: string;
     timestamp: number;
     source: string;
     securityLevel: SecurityLevel;

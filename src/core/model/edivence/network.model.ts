@@ -1,9 +1,9 @@
-import { Status } from "@/app/utils/enum";
+import { Status } from "@/utils/enum";
 
 export interface Network {
-    id: number;
+    id: string;
     timestamp: number;
-    caseId: number;
+    caseId: string;
     sourceIp: string;
     destIp: string;
     sourcePort: number;

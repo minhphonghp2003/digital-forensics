@@ -1,8 +1,8 @@
-import { Status } from "@/app/utils/enum";
+import { Status } from "@/utils/enum";
 
 export interface Device {
-    id: number;
-    caseId: number;
+    id: string;
+    caseId: string;
     name: string;
     deviceType: string;
     os: string;

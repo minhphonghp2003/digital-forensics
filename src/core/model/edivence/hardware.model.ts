@@ -1,9 +1,9 @@
-import { Status } from "@/app/utils/enum";
+import { Status } from "@/utils/enum";
 
 export interface Hardware {
-    id: number;
+    id: string;
     fileName: string;
-    caseId: number;
+    caseId: string;
     fileType: string;
     fileSize: number;
     hash: string;

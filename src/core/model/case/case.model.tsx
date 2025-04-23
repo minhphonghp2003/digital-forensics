@@ -1,7 +1,7 @@
-import { Status } from "@/app/utils/enum";
+import { Status } from "@/utils/enum";
 
 export interface Case {
-    id: number;
+    id: string;
     title: string;
     createdDate: number;
     description: string;
