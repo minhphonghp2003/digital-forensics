@@ -11,16 +11,13 @@ export default function Home() {
   return (
     <>
       {
-
         account ? <div>
           <BasicInfo />
           <div>
             <AllCase />
           </div>
-
         </div> :
           <div className="flex flex-col items-center justify-center h-full ">
-
             Connect to your wallet to continue
           </div>
       }
