@@ -36,7 +36,7 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
-        return (
+    return (
         <div className=''>
             <AccountContext value={{
                 account, setAccount
@@ -44,11 +44,6 @@ function AppContextProvider({ children }: { children: React.ReactNode }) {
 
                 {children}
             </AccountContext>
-            {/* <button onClick={connectWallet}>
-                {account ? `Connected: ${account}` : "Connect Wallet"}
-            </button>
-            {account && <button onClick={interactWithContract}>Interact with Contract</button>}
-            {contractData && <p>Contract Data: {contractData?.toString()}</p>} */}
         </div>
     )
 }
