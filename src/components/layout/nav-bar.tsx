@@ -72,7 +72,6 @@ function NavBar() {
             investigator: addAddress,
             nickname: addNickname
         });
-        console.log(tx);
         setOpenAdd(false);
 
     }
