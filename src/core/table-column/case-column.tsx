@@ -34,12 +34,17 @@ export const caseColumns: ColumnDef<Case>[] = [
 
     },
     {
+        accessorKey: "investigator",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Investigator", }),
+
+    },
+    {
         accessorKey: "status",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Status" }),
 
     },
     {
-        accessorKey: "createdAt",
+        accessorKey: "createdDate",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Created At" }),
 
     },
@@ -60,7 +65,7 @@ export const caseColumns: ColumnDef<Case>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(caseDetail.id)}
+                            onClick={() => navigator.clipboard.writeText(caseDetail.id.toString())}
                         >
                             Copy ID
                         </DropdownMenuItem>

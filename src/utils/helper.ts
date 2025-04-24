@@ -14,3 +14,7 @@ export const truncateFromMiddle = (
         fullStr.substr(fullStr.length - backChars)
     );
 };
+
+export const formatDateFromBigint = (value: any) => {
+    return new Date(Number(value) * 1000).toLocaleDateString("vi-VN") || "N/A"
+}
