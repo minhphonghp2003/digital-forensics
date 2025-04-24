@@ -34,11 +34,6 @@ export const caseColumns: ColumnDef<Case>[] = [
 
     },
     {
-        accessorKey: "investigator",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Investigator", }),
-
-    },
-    {
         accessorKey: "status",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Status" }),
 

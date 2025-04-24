@@ -20,7 +20,7 @@ function AllCase({ cases }: { cases?: Case[] | null }) {
     let data = cases?.map((item: Case) => {
         return {
             id: item.id,
-            description: item.description,
+            description: truncateFromMiddle(item.description, 50),
             status: Status[item.status],
             title: item.title,
             investigator: truncateFromMiddle(item.investigator),
@@ -38,7 +38,6 @@ function AllCase({ cases }: { cases?: Case[] | null }) {
         })
         if (tx) {
             setOpen(false)
-
         }
 
     }
