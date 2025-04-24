@@ -16,7 +16,6 @@ import {
 import * as React from "react"
 
 import { DataTablePagination } from "@/components/table-elements/pagination"
-import { Button } from "@/components/ui/button"
 import {
     Table,
     TableBody,
@@ -28,18 +27,17 @@ import {
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: any
     searchKey: string,
-    onBtnClicked?: (row: TData) => void,
-    btnName?: string
+    extraWidget?: any,
+
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     searchKey,
-    onBtnClicked,
-    btnName
+    extraWidget,
 }: DataTableProps<any, any>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -68,7 +66,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex items-center py-4">
+            <div className="flex items-center justify-between py-4">
                 <Input
                     placeholder="Search..."
                     value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
@@ -77,9 +75,9 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
-                <Button onClick={onBtnClicked} variant="outline" className="ml-auto">
-                    {btnName}
-                </Button>
+                {extraWidget}
+
+
             </div>
 
             <div className="rounded-md border">

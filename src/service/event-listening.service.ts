@@ -1,12 +1,17 @@
 
 // Event listener for contract events
 export const listenToEvents = (contract: any) => {
+    console.log("listenning to event");
+
     // Listen to CaseDeleted event
     contract.on("CaseDeleted", (caseId: any) => {
         console.log(`Case Deleted: ${caseId.toString()}`);
         // Handle CaseDeleted event, e.g., update state or notify user
     });
-
+    contract.on("CaseAdded", (caseId: any, title: any, investigator: any) => {
+        console.log(`Case added: ${caseId.toString()}`);
+        // Handle CaseDeleted event, e.g., update state or notify user
+    });
     // Listen to LogDeleted event
     contract.on("LogDeleted", (logId: any) => {
         console.log(`Log Deleted: ${logId.toString()}`);

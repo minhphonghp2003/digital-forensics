@@ -36,7 +36,6 @@ export let checkConnection = async () => {
         const accounts = await provider.listAccounts();
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_CONTRACT_ADDRESS as string, abi, await provider.getSigner())
         if (accounts.length > 0) {
-            listenToEvents(contract)
             return {
                 address: accounts[0].address,
                 signer: await provider.getSigner(),

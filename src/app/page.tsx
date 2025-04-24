@@ -16,13 +16,23 @@ export default function Home() {
   let fetchUser = async () => {
     if (!account) return;
     let userResult = await getInvestigator(account.contract, account?.address || "");
+    setUser(userResult);
+    if (userResult) {
+      fetchCases()
+    }
+  }
+  let fetchCases = async () => {
+
     let caseResult = await getCaseIdsByInvestigator({ contract: account.contract, investigator: account?.address || "", });
     caseResult = await getCasesByIds({ contract: account.contract, caseIds: caseResult });
     setCases(caseResult);
-    setUser(userResult);
   }
   useEffect(() => {
     fetchUser()
+    account && account.contract.on("CaseAdded", (caseId: any, title: any, investigator: any) => {
+      console.log(caseId, title, investigator);
+      investigator == account.address && fetchCases()
+    });
 
   }, [account])
   return (
