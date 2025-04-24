@@ -1,6 +1,7 @@
 import InfoBox from '@/components/ui/info-box';
 import { Case } from '@/core/model/case/case.model';
 import { Investigator } from '@/core/model/investigator/investigator.model';
+import { truncateFromMiddle } from '@/utils/helper';
 
 function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Investigator | null, account: any }) {
     cases?.sort((a, b) => {
@@ -15,7 +16,7 @@ function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Inves
             },
             {
                 title: "Address",
-                value: account?.address || "N/A"
+                value: truncateFromMiddle(account?.address) || "N/A"
             },
             {
                 title: "Total cases",
@@ -33,7 +34,8 @@ function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Inves
             ]} className=" w-full" ></InfoBox>
             <InfoBox title="Latest case" data={[{
                 title: "ID",
-                value: latestCase?.id || "N/A"
+                value: truncateFromMiddle(latestCase?.id.toString(),) || "N/A",
+                copyText: latestCase?.id.toString() || "N/A"
             },
             {
                 title: "Title",
