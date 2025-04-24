@@ -63,3 +63,14 @@ export let updateCaseStatus = async ({
     await tx.wait();
     return tx;
 };
+export let getCasesByIds = async ({
+    contract,
+    caseIds,
+}: any) => {
+    const cases = await Promise.all(
+        caseIds.map(async (caseId: string) => {
+            return await getCase({ contract, caseId });
+        })
+    );
+    return cases;
+}

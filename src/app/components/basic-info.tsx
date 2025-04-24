@@ -1,30 +1,49 @@
 import InfoBox from '@/components/ui/info-box';
 import { AccountContext } from '@/core/context/account.context';
-import { useContext, useEffect } from 'react';
+import { Case } from '@/core/model/case/case.model';
+import { Investigator } from '@/core/model/investigator/investigator.model';
+import { getCasesByIds } from '@/service/case.service';
+import { getCaseIdsByInvestigator, getInvestigator } from '@/service/investigator.service';
+import { useContext, useEffect, useState } from 'react';
 
 function BasicInfo() {
     let { account, setAccount } = useContext(AccountContext)
+    let [user, setUser] = useState<Investigator | null>(null)
+    let [cases, setCases] = useState<Case[] | null>(null)
+    let fetchUser = async () => {
+        if (!account) return;
+        let userResult = await getInvestigator(account.contract, account?.address || "");
+        let caseResult = await getCaseIdsByInvestigator({ contract: account.contract, investigator: account?.address || "", });
+        caseResult = await getCasesByIds({ contract: account.contract, caseIds: caseResult });
+        setCases(caseResult);
+        setUser(userResult);
+    }
     useEffect(() => {
+        fetchUser()
 
     }, [account])
 
     return (
-        <div>       <div className={`flex justify-between gap-4 my-6 `}>
+        <div className={`flex justify-between gap-4 my-6 `}>
             <InfoBox title="My account" data={[{
                 title: "Nickname",
-                value: "Nickname"
+                value: user?.nickname || "N/A"
+            },
+            {
+                title: "Address",
+                value: account?.address || "N/A"
             },
             {
                 title: "Total cases",
-                value: "12"
+                value: cases?.length || "0"
             },
             {
                 title: "Closed cases",
-                value: "2"
+                value: cases?.filter((item) => item.status == 0).length || "0"
             },
             {
                 title: "Created at",
-                value: Date.now().toString()
+                value: user?.createdAt || "N/A"
             },
 
             ]} className=" w-full" ></InfoBox>
@@ -47,7 +66,7 @@ function BasicInfo() {
 
             ]} className=" w-full" ></InfoBox>
 
-        </div></div>
+        </div>
     )
 }
 

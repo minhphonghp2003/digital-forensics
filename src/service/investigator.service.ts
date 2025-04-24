@@ -17,10 +17,7 @@ export let addInvestigator = async ({ contract, investigator, nickname }: any) =
     return tx;
 }
 
-// Get case IDs by investigator address
-export let getInvestigatorCases = async ({ contract, address }: any) => {
-    return await contract.investigatorCaseMap(address);
-};
+
 export let getCaseIdsByInvestigator = async ({ contract, investigator }: any) => {
     return await contract.getCaseIdsByInvestigator(investigator);
 };
