@@ -1,7 +1,6 @@
 "use client"
 import InfoBox from '@/components/ui/info-box';
 import { Case } from '@/core/model/case/case.model';
-import { Status } from '@/utils/enum';
 import { formatDateFromBigint, truncateFromMiddle } from '@/utils/helper';
 
 function BasicCaseInfo({ caseDetail, hardware, device, network, log }: { caseDetail?: Case, hardware: any, device: any, network: any, log: any }) {
@@ -21,10 +20,6 @@ function BasicCaseInfo({ caseDetail, hardware, device, network, log }: { caseDet
                 title: "Investigator",
                 value: truncateFromMiddle(caseDetail?.investigator) || '__',
                 copyText: caseDetail?.investigator
-            },
-            {
-                title: "Status",
-                value: Status[caseDetail?.status ?? 0]
             },
 
             ]} className=" w-full" ></InfoBox>

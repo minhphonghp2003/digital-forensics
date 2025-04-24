@@ -1,11 +1,14 @@
 "use client"
 import BasicCaseInfo from '@/app/case-detail/[id]/components/basic-info';
 import DetailTable from '@/app/case-detail/[id]/components/detail-table';
+import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AccountContext } from '@/core/context/account.context';
-import { getCase, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCase } from '@/service/case.service';
+import { getCase, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCase, updateCaseStatus } from '@/service/case.service';
+import { Status } from '@/utils/enum';
 import { truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
 import { useParams } from 'next/navigation';
@@ -17,9 +20,11 @@ function page() {
     let id = params.id
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
+    let [openStatus, setOpenStatus] = useState(false)
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     let [caseDetail, setCase] = useState<any>(null)
+    let [newStatus, setStatus] = useState<any>(null)
     let [hardware, setHardware] = useState<any>(null)
     let [device, setDevice] = useState<any>(null)
     let [network, setNetwork] = useState<any>(null)
@@ -79,12 +84,26 @@ function page() {
         });
     }, [account])
     async function handleAddCase() {
-        let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
-        if (tx) {
-            setOpen(false)
-            fetchCase()
-        }
+        if (account) {
 
+            let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
+            if (tx) {
+                setOpen(false)
+                fetchCase()
+            }
+
+        }
+    }
+
+    let status = Status[caseDetail?.status ?? 0]
+    async function handleUpdateStatus() {
+        if (account && newStatus) {
+            let tx = await updateCaseStatus({ contract: account.contract, caseId: id, newStatus })
+            if (tx) {
+                setOpenStatus(false)
+                fetchCase()
+            }
+        }
     }
 
     return (
@@ -117,11 +136,47 @@ function page() {
                 </DialogContent>
 
             </Dialog>
+            <Dialog open={openStatus} onOpenChange={setOpenStatus} >
+                <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                        <DialogTitle>Update case</DialogTitle>
+
+                    </DialogHeader>
+                    <Select onValueChange={(e) => {
+                        setStatus(e)
+                    }} >
+                        <div className='flex justify-between'>
+
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Update case status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectLabel>Status</SelectLabel>
+                                    <SelectItem value="0">Closed</SelectItem>
+                                    <SelectItem value="1">Deleted</SelectItem>
+                                    <SelectItem value="2">Active</SelectItem>
+                                </SelectGroup>
+                            </SelectContent>
+                            <Button onClick={handleUpdateStatus} type="submit">Submit</Button>
+                        </div>
+                    </Select>
+                </DialogContent>
+
+            </Dialog>
             <div className='flex justify-between text-lg items-center  my-4'>
 
-                <p className='flex items-center gap-3 font-bold my-4 text-xl'>
-                    Case #{truncateFromMiddle(id)} <CiEdit onClick={() => { setOpen(true) }} color='orange' className='cursor-pointer' />
-                </p>
+                <div>
+                    <p className='flex items-center gap-3 font-bold  cursor-pointer text-xl' onClick={() => {
+
+                        navigator.clipboard.writeText(caseDetail?.id ?? "N/A");
+                    }}>
+                        Case #{truncateFromMiddle(id)} <CiEdit onClick={() => { setOpen(true) }} color='orange' className='cursor-pointer' />
+                    </p>
+                    <div>
+                        <Badge className='cursor-pointer' onClick={() => { setOpenStatus(true) }} variant={status == "ACTIVE" ? "active" : status == "CLOSED" ? "closed" : "deleted"}>{status}</Badge>
+                    </div>
+                </div>
                 <p>
                     Title: <span className=''>
                         {caseDetail?.title || '__'}

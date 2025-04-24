@@ -39,6 +39,7 @@ export let updateCase = async ({
     return tx;
 };
 
+// done
 export let updateCaseStatus = async ({
     contract,
     caseId,
