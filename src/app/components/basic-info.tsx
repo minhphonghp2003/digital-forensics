@@ -1,28 +1,12 @@
 import InfoBox from '@/components/ui/info-box';
-import { AccountContext } from '@/core/context/account.context';
 import { Case } from '@/core/model/case/case.model';
 import { Investigator } from '@/core/model/investigator/investigator.model';
-import { getCasesByIds } from '@/service/case.service';
-import { getCaseIdsByInvestigator, getInvestigator } from '@/service/investigator.service';
-import { useContext, useEffect, useState } from 'react';
 
-function BasicInfo() {
-    let { account, setAccount } = useContext(AccountContext)
-    let [user, setUser] = useState<Investigator | null>(null)
-    let [cases, setCases] = useState<Case[] | null>(null)
-    let fetchUser = async () => {
-        if (!account) return;
-        let userResult = await getInvestigator(account.contract, account?.address || "");
-        let caseResult = await getCaseIdsByInvestigator({ contract: account.contract, investigator: account?.address || "", });
-        caseResult = await getCasesByIds({ contract: account.contract, caseIds: caseResult });
-        setCases(caseResult);
-        setUser(userResult);
-    }
-    useEffect(() => {
-        fetchUser()
-
-    }, [account])
-
+function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Investigator | null, account: any }) {
+    cases?.sort((a, b) => {
+        return Number(b.createdDate) - Number(a.createdDate)
+    })
+    let latestCase = cases?.[0] || null;
     return (
         <div className={`flex justify-between gap-4 my-6 `}>
             <InfoBox title="My account" data={[{
@@ -49,19 +33,19 @@ function BasicInfo() {
             ]} className=" w-full" ></InfoBox>
             <InfoBox title="Latest case" data={[{
                 title: "ID",
-                value: "728ed52f"
+                value: latestCase?.id || "N/A"
             },
             {
                 title: "Title",
-                value: "Phong first case"
+                value: latestCase?.title || "N/A"
             },
             {
                 title: "Description",
-                value: "This is a description of the case that is being created. It is a long description that will be used to test the case creation process."
+                value: latestCase?.description || "N/A"
             },
             {
                 title: "Created at",
-                value: Date.now().toString()
+                value: new Date(Number(latestCase?.createdDate) * 1000).toLocaleDateString("vi-VN") || "N/A"
             },
 
             ]} className=" w-full" ></InfoBox>
