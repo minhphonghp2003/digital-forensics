@@ -11,7 +11,7 @@ function CustomTab({ tabs }: { tabs: Tab[] }) {
                 {
                     tabs?.map((tab, index) => {
                         return (
-                            <p key={index} onClick={() => setActiveTab(index + 1)} className={` font-semibold cursor-pointer ${activeTab === index + 1 ? 'text-orange-500' : 'text-gray-500'}`}>
+                            <p key={index} onClick={() => setActiveTab(index + 1)} className={` font-semibold cursor-pointer ${activeTab === index + 1 ? 'text-orange-400' : 'text-gray-500'}`}>
                                 {tab.title}
                             </p>
                         )

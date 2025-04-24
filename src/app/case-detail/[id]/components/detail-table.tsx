@@ -9,7 +9,7 @@ function DetailTable() {
                 <CustomTab tabs={[
                     {
                         title: "Hardware",
-                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Hardware" columns={evidenceColumns} data={[
+                        content: <div className=''><CustomTable title="Hardware" columns={evidenceColumns} data={[
                             {
                                 id: "728ed52f",
                                 title: "title",
@@ -35,7 +35,7 @@ function DetailTable() {
                     },
                     {
                         title: "Device",
-                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Device" columns={evidenceColumns} data={[
+                        content: <div className=''><CustomTable title="Device" columns={evidenceColumns} data={[
                             {
                                 id: "728ed52f",
                                 title: "title",
@@ -61,7 +61,7 @@ function DetailTable() {
                     },
                     {
                         title: "Network",
-                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Network" columns={evidenceColumns} data={[
+                        content: <div className=''><CustomTable title="Network" columns={evidenceColumns} data={[
                             {
                                 id: "728ed52f",
                                 title: "title",
@@ -87,7 +87,7 @@ function DetailTable() {
                     },
                     {
                         title: "Log",
-                        content: <div className='text-gray-500'><CustomTable btnName="Add" title="Log" columns={evidenceColumns} data={[
+                        content: <div className=''><CustomTable title="Log" columns={evidenceColumns} data={[
                             {
                                 id: "728ed52f",
                                 title: "title",

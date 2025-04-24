@@ -1,46 +1,48 @@
 "use client"
 import InfoBox from '@/components/ui/info-box';
-import { AccountContext } from '@/core/context/account.context';
-import { useContext, useEffect } from 'react';
+import { Case } from '@/core/model/case/case.model';
+import { Status } from '@/utils/enum';
+import { formatDateFromBigint, truncateFromMiddle } from '@/utils/helper';
 
-function BasicCaseInfo() {
-   
+function BasicCaseInfo({ caseDetail, hardware, device, network, log }: { caseDetail?: Case, hardware: any, device: any, network: any, log: any }) {
+
 
     return (
         <div>  <div className={`flex justify-between gap-4 my-6 `}>
             <InfoBox title="Overview" data={[{
                 title: "Description",
-                value: "This is a description of the case that is being created. It is a long description that will be used to test the case creation process."
+                value: caseDetail?.description || '__'
             },
             {
                 title: "Created at",
-                value: "12"
+                value: formatDateFromBigint(caseDetail?.createdDate) || '__'
             },
             {
                 title: "Investigator",
-                value: "2"
+                value: truncateFromMiddle(caseDetail?.investigator) || '__',
+                copyText: caseDetail?.investigator
             },
             {
                 title: "Status",
-                value: "12/12/2005"
+                value: Status[caseDetail?.status ?? 0]
             },
 
             ]} className=" w-full" ></InfoBox>
             <InfoBox title="Evidence" data={[{
                 title: "Hardwares",
-                value: 1
+                value: hardware?.length ?? 0
             },
             {
                 title: "Devices",
-                value: 3
+                value: device?.length ?? 0
             },
             {
                 title: "Networks",
-                value: 5
+                value: network?.length ?? 0
             },
             {
                 title: "Logs",
-                value: 10
+                value: log?.length ?? 0
             },
 
             ]} className=" w-full" ></InfoBox>

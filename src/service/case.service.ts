@@ -1,47 +1,33 @@
+// done
 export let createCase = async ({ contract, title, description }: any) => {
     const tx = await contract.createCase(title, description);
     await tx.wait();
     return tx;
 };
+// done
 export let getCase = async ({ contract, caseId }: any) => {
     return await contract.casesMap(caseId);
 };
+// done
 export let getCaseLogIds = async ({ contract, caseId }: any) => {
     return await contract.getCaseLogIds(caseId);
 };
-
+// done 
 export let getCaseDeviceIds = async ({ contract, caseId }: any) => {
     return await contract.getCaseDeviceIds(caseId);
 };
 
+// done
 export let getCaseNetworkIds = async ({ contract, caseId }: any) => {
     return await contract.getCaseNetworkIds(caseId);
 };
 
+// done
 export let getCaseHardwareIds = async ({ contract, caseId }: any) => {
     return await contract.getCaseHardwareIds(caseId);
 };
 
 
-// Get hardware IDs linked to a case
-export let getHardwareIdsByCase = async ({ contract, caseId }: any) => {
-    return await contract.caseHardwareMap(caseId);
-};
-
-// Get device IDs linked to a case
-export let getDeviceIdsByCase = async ({ contract, caseId }: any) => {
-    return await contract.caseDeviceMap(caseId);
-};
-
-// Get network IDs linked to a case
-export let getNetworkIdsByCase = async ({ contract, caseId }: any) => {
-    return await contract.caseNetworkMap(caseId);
-};
-
-// Get log IDs linked to a case
-export let getLogIdsByCase = async ({ contract, caseId }: any) => {
-    return await contract.caseLogMap(caseId);
-};
 export let updateCase = async ({
     contract,
     caseId,
@@ -53,7 +39,6 @@ export let updateCase = async ({
     return tx;
 };
 
-// Update Case Status
 export let updateCaseStatus = async ({
     contract,
     caseId,
@@ -63,6 +48,7 @@ export let updateCaseStatus = async ({
     await tx.wait();
     return tx;
 };
+// done
 export let getCasesByIds = async ({
     contract,
     caseIds,
