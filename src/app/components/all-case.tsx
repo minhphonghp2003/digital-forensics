@@ -1,24 +1,12 @@
-import CustomTable from '@/components/ui/custom-table'
-import { caseColumns } from '@/core/table-column/case-column'
-import React from 'react'
+import CustomTable from '@/components/ui/custom-table';
+import { Case } from '@/core/model/case/case.model';
+import { caseColumns } from '@/core/table-column/case-column';
 
-function AllCase() {
-
-    let data = Array.from({ length: 25 }, (_, i) => {
-        return {
-            id: "728ed52f",
-            title: "title" + i,
-            description: "description",
-            status: "pending",
-            createdAt: "2023-10-01",
-        }
-    })
-
-
+function AllCase({ cases }: { cases?: Case[] | null }) {
     return (
-        <div> <CustomTable searchKey="id" btnName="Add" onBtnClicked={(data: any) => {
+        <CustomTable searchKey="id" btnName="Add" onBtnClicked={(data: any) => {
 
-        }} columns={caseColumns} title="All cases" data={data} /></div>
+        }} columns={caseColumns} title="All cases" data={cases} />
     )
 }
 

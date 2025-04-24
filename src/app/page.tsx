@@ -31,7 +31,7 @@ export default function Home() {
         account ? <div>
           <BasicInfo cases={cases} user={user} account={account} />
           <div>
-            <AllCase />
+            <AllCase cases={cases} />
           </div>
         </div> :
           <div className="flex flex-col items-center justify-center h-full ">

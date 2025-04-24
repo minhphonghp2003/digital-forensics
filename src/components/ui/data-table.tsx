@@ -65,6 +65,7 @@ export function DataTable<TData, TValue>({
         }
     })
 
+
     return (
         <div>
             <div className="flex items-center py-4">
@@ -84,7 +85,7 @@ export function DataTable<TData, TValue>({
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>
-                        {table.getHeaderGroups().map((headerGroup) => (
+                        {table?.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
@@ -102,8 +103,8 @@ export function DataTable<TData, TValue>({
                         ))}
                     </TableHeader>
                     <TableBody>
-                        {table.getRowModel().rows?.length ? (
-                            table.getRowModel().rows.map((row) => (
+                        {data && table?.getRowModel()?.rows?.length ? (
+                            table?.getRowModel()?.rows.map((row) => (
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
@@ -125,7 +126,8 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div >
-            <DataTablePagination table={table} />
+            {
+                data && <DataTablePagination table={table} />}
 
         </div>
     )
