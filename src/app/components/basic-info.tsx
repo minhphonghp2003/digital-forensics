@@ -16,7 +16,9 @@ function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Inves
             },
             {
                 title: "Address",
-                value: truncateFromMiddle(account?.address) || "N/A"
+                value: truncateFromMiddle(account?.address) || "N/A",
+                copyText: account?.address || "N/A"
+
             },
             {
                 title: "Total cases",
