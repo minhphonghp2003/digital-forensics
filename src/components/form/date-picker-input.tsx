@@ -1,5 +1,6 @@
 "use client"
 
+import { format } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -11,7 +12,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-function DatePickerInput({ title, onDatePicked, format, selected }: { title: string, selected: any, format?: any, onDatePicked: any }) {
+function DatePickerInput({ title, onDatePicked, formatType, selected }: { title: string, selected: any, formatType?: any, onDatePicked: any }) {
 
     return (
         <div className="">
@@ -29,7 +30,7 @@ function DatePickerInput({ title, onDatePicked, format, selected }: { title: str
                         )}
                     >
                         <CalendarIcon />
-                        {selected && format(selected, format ?? "PPP")}
+                        {selected && format(selected, formatType ?? "PPP")}
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">

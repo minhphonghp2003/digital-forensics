@@ -1,13 +1,13 @@
 
 // Add Log
-export let addLog = async ({ contract, caseId, source, securityLevel, logType }: any) => {
+export let createLog = async ({ contract, caseId, source, securityLevel, logType }: any) => {
     const tx = await contract.addLog(caseId, source, securityLevel, logType);
     await tx.wait();
     return tx;
 };
 
 // Add Network
-export let addNetwork = async ({
+export let createNetwork = async ({
     contract, caseId, sourceIp, destIp, sourcePort, destPort, protocol, dataSize
 }: any) => {
     const tx = await contract.addNetwork(caseId, sourceIp, destIp, sourcePort, destPort, protocol, dataSize);
@@ -16,7 +16,7 @@ export let addNetwork = async ({
 };
 
 // Add Device
-export let addDevice = async ({
+export let createDevice = async ({
     contract, caseId, name, deviceType, os, osVersion, mac, ip, lastBootTime
 }: any) => {
     const tx = await contract.addDevice(caseId, name, deviceType, os, osVersion, mac, ip, lastBootTime);
@@ -25,7 +25,7 @@ export let addDevice = async ({
 };
 
 // Add Hardware
-export let addHardware = async ({
+export let createHardware = async ({
     contract, caseId, fileName, fileType, fileSize, hash,
     createdDate, modifiedDate, accessDate, diskType, filePath
 }: any) => {
