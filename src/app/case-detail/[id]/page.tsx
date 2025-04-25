@@ -81,9 +81,10 @@ function page() {
         fetchCase()
         account && account.contract.on("EvidenceAdded", (caseId: any, evidenceType: any, evidenceId: any) => {
             console.log(caseId, evidenceType, evidenceId);
+            fetchCase()
         });
     }, [account])
-    async function handleAddCase() {
+    async function handleUpdateCase() {
         if (account) {
 
             let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
@@ -131,7 +132,7 @@ function page() {
                         </div>
                     </div>
                     <DialogFooter>
-                        <Button onClick={handleAddCase} type="submit">Submit</Button>
+                        <Button onClick={handleUpdateCase} type="submit">Submit</Button>
                     </DialogFooter>
                 </DialogContent>
 
@@ -184,7 +185,7 @@ function page() {
                 </p>
             </div>
             <BasicCaseInfo caseDetail={caseDetail} hardware={hardware} device={device} network={network} log={log} />
-            <DetailTable />
+            <DetailTable caseId={id} />
         </div>
     )
 }

@@ -1,115 +1,31 @@
+"use client"
+import DeviceDetail from '@/app/case-detail/[id]/components/device'
+import HardwareDetail from '@/app/case-detail/[id]/components/hardware'
+import LogDetail from '@/app/case-detail/[id]/components/log'
+import NetworkDetail from '@/app/case-detail/[id]/components/network'
 import CustomTab from '@/components/ui/custom-tab'
-import CustomTable from '@/components/ui/custom-table'
-import { evidenceColumns } from '@/core/table-column/evidence-column'
 
-function DetailTable() {
+function DetailTable({ caseId }: { caseId: any }) {
+
     return (
         <div>
             <div>
                 <CustomTab tabs={[
                     {
                         title: "Hardware",
-                        content: <div className=''><CustomTable title="Hardware" columns={evidenceColumns} data={[
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                        ]} searchKey={'id'} /></div>
+                        content: <HardwareDetail caseId={caseId} />
                     },
                     {
                         title: "Device",
-                        content: <div className=''><CustomTable title="Device" columns={evidenceColumns} data={[
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                        ]} searchKey={'id'} /></div>
+                        content: <DeviceDetail caseId={caseId} />
                     },
                     {
                         title: "Network",
-                        content: <div className=''><CustomTable title="Network" columns={evidenceColumns} data={[
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                        ]} searchKey={'id'} /></div>
+                        content: <NetworkDetail caseId={caseId} />
                     },
                     {
                         title: "Log",
-                        content: <div className=''><CustomTable title="Log" columns={evidenceColumns} data={[
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                            {
-                                id: "728ed52f",
-                                title: "title",
-                                description: "description",
-                                status: "pending",
-                                createdAt: "2023-10-01",
-                            },
-                        ]} searchKey={'id'} /></div>
+                        content: <LogDetail caseId={caseId} />
                     }
                 ]} />
             </div>

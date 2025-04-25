@@ -11,12 +11,11 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Case } from "@/core/model/case/case.model"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 
 
-export const evidenceColumns: ColumnDef<Case>[] = [
+export const evidenceColumns: ColumnDef<any>[] = [
     {
         accessorKey: "id",
         header: "Id",
@@ -37,7 +36,7 @@ export const evidenceColumns: ColumnDef<Case>[] = [
 
     },
     {
-        accessorKey: "createdAt",
+        accessorKey: "createdDate",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Created At" }),
 
     },
@@ -56,7 +55,7 @@ export const evidenceColumns: ColumnDef<Case>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(detail.id)}
+                            onClick={() => navigator.clipboard.writeText(detail?.id)}
                         >
                             Copy ID
                         </DropdownMenuItem>
