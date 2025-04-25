@@ -1,7 +1,7 @@
 import InfoBox from '@/components/ui/info-box';
 import { Case } from '@/core/model/case/case.model';
 import { Investigator } from '@/core/model/investigator/investigator.model';
-import { formatDateFromBigint, truncateFromMiddle } from '@/utils/helper';
+import { formatDate, truncateFromMiddle } from '@/utils/helper';
 
 function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Investigator | null, account: any }) {
     cases?.sort((a, b) => {
@@ -49,7 +49,7 @@ function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Inves
             },
             {
                 title: "Created at",
-                value: formatDateFromBigint(latestCase?.createdDate ?? 0) || "N/A"
+                value: formatDate(Number(latestCase?.createdDate ?? 0) * 1000) || "N/A"
             },
 
             ]} className=" w-full" ></InfoBox>

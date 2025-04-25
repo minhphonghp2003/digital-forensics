@@ -8,7 +8,7 @@ import { Case } from '@/core/model/case/case.model';
 import { caseColumns } from '@/core/table-column/case-column';
 import { createCase } from '@/service/case.service';
 import { Status } from '@/utils/enum';
-import { formatDateFromBigint, truncateFromMiddle } from '@/utils/helper';
+import { formatDate, truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
 import { useContext, useState } from 'react';
 
@@ -24,7 +24,7 @@ function AllCase({ cases }: { cases?: Case[] | null }) {
             status: Status[item.status],
             title: item.title,
             investigator: truncateFromMiddle(item.investigator),
-            createdDate: formatDateFromBigint(item.createdDate),
+            createdDate: formatDate(Number(item.createdDate) * 1000),
         }
     })
     let handleAddCase = async () => {

@@ -83,7 +83,7 @@ function page() {
             console.log(caseId, evidenceType, evidenceId);
             fetchCase()
         });
-    }, [account])
+    }, [account, id])
     async function handleUpdateCase() {
         if (account) {
 

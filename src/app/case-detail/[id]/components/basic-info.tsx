@@ -1,7 +1,7 @@
 "use client"
 import InfoBox from '@/components/ui/info-box';
 import { Case } from '@/core/model/case/case.model';
-import { formatDateFromBigint, truncateFromMiddle } from '@/utils/helper';
+import { formatDate, truncateFromMiddle } from '@/utils/helper';
 
 function BasicCaseInfo({ caseDetail, hardware, device, network, log }: { caseDetail?: Case, hardware: any, device: any, network: any, log: any }) {
 
@@ -14,7 +14,7 @@ function BasicCaseInfo({ caseDetail, hardware, device, network, log }: { caseDet
             },
             {
                 title: "Created at",
-                value: formatDateFromBigint(caseDetail?.createdDate) || '__'
+                value: formatDate(Number(caseDetail?.createdDate)*1000) || '__'
             },
             {
                 title: "Investigator",

@@ -6,13 +6,13 @@ import CustomTable from '@/components/ui/custom-table'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { AccountContext } from '@/core/context/account.context'
 import { Hardware } from '@/core/model/edivence/hardware.model'
-import { evidenceColumns } from '@/core/table-column/evidence-column'
+import { hardwareColumns } from '@/core/table-column/hardware-column'
 import { getCaseHardwareIds } from '@/service/case.service'
 import { createHardware, getHardware } from '@/service/evidence.service'
+import { Status } from '@/utils/enum'
+import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
-// fileName, fileType, fileSize, hash,
-//     createdDate, modifiedDate, accessDate, diskType, filePath
 function HardwareDetail({ caseId }: { caseId: any }) {
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
@@ -40,11 +40,9 @@ function HardwareDetail({ caseId }: { caseId: any }) {
     })
     let fetchDetail = async () => {
         if (account?.contract) {
-
             let ids = await getCaseHardwareIds({ contract: account.contract, caseId })
             let result = []
             result = await Promise.all(ids.map((e: any) => getHardware({ contract: account.contract, hardwareId: e })));
-            console.log(result);
             setHardware(result)
         }
     }
@@ -62,14 +60,15 @@ function HardwareDetail({ caseId }: { caseId: any }) {
     }
 
     return (
-        <div className=''><CustomTable title="Hardware" columns={evidenceColumns} data={
+        <div className=''><CustomTable title="Hardware" columns={hardwareColumns} data={
             hardware?.map((e: Hardware) => {
                 return {
                     id: e.id,
-                    title: e.fileName,
-                    description: "description",
-                    status: "pending",
-                    createdDate: "2023-10-01",
+                    fileName: e.fileName,
+                    fileType: e.fileType,
+                    hash: e.hash,
+                    accessDate: formatDate(Number(e.accessDate)),
+                    status: Status[e.status]
                 }
             })
 

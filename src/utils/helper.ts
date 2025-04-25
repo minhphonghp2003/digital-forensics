@@ -15,6 +15,6 @@ export const truncateFromMiddle = (
     );
 };
 
-export const formatDateFromBigint = (value: any) => {
-    return new Date(Number(value) * 1000).toLocaleDateString("vi-VN") || "N/A"
+export const formatDate = (value: any) => {
+    return new Date(value).toLocaleDateString("vi-VN") || "N/A"
 }
