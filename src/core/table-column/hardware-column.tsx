@@ -4,6 +4,7 @@ import { ColumnDef } from "@tanstack/react-table"
 
 import DatePickerInput from '@/components/form/date-picker-input'
 import TextInput from '@/components/form/text-input'
+import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
@@ -16,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AccountContext } from "@/core/context/account.context"
 import { Hardware } from "@/core/model/edivence/hardware.model"
-import { updateHardware } from "@/service/evidence.service"
+import { updateHardware, updateHardwareStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -54,10 +55,9 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
         id: "actions",
         cell: ({ row }) => {
             let detail = row.original
-            console.log(detail);
-
             let { account } = useContext(AccountContext)
             let [open, setOpen] = useState(false)
+            let [openStatus, setOpenStatus] = useState(false)
             let [newHardware, setNewHardware] = useState<{
                 fileName: string,
                 fileType: string,
@@ -67,7 +67,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                 modifiedDate: any,
                 accessDate: any,
                 diskType: any,
-                filePath: any
+                filePath: any,
             }>({
                 accessDate: detail.accessDate,
                 createdDate: detail.createdDate,
@@ -79,15 +79,21 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                 fileType: detail.fileType,
                 hash: detail.hash
             })
-            console.log(newHardware);
 
             async function handleUpdateHardware() {
                 if (account) {
-                    console.log(newHardware);
-
                     let tx = await updateHardware({ contract: account.contract, hardwareId: detail.id, caseId: detail.caseId, ...newHardware })
                     if (tx) {
                         setOpen(false)
+                    }
+                }
+            }
+
+            async function handleUpdateStatus(status: any) {
+                if (account) {
+                    let tx = await updateHardwareStatus({ contract: account.contract, hardwareId: detail.id, caseId: detail.caseId, newStatus: status })
+                    if (tx) {
+                        setOpenStatus(false)
                     }
                 }
             }
@@ -113,6 +119,11 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                                 setOpen(true)
                             }}
                         >View details</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => {
+                                setOpenStatus(true)
+                            }}
+                        >Update status</DropdownMenuItem>
                     </DropdownMenuContent>
                     <Dialog open={open} onOpenChange={setOpen} >
                         <DialogContent className="sm:max-w-[800px]">
@@ -184,6 +195,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                         </DialogContent>
 
                     </Dialog>
+                    <UpdateStatusDialog title={"Update status"} name={"status"} openStatus={openStatus} setOpenStatus={setOpenStatus} defaultStatus={detail.status} handleUpdateStatus={handleUpdateStatus} />
                 </DropdownMenu>
             )
         },
