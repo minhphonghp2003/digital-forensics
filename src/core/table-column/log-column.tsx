@@ -11,10 +11,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Hardware } from "@/core/model/edivence/hardware.model"
+import { Log } from "@/core/model/edivence/log.model"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
-import { Log } from "@/core/model/edivence/log.model"
 
 
 export const logColumns: ColumnDef<Log>[] = [
@@ -33,7 +32,7 @@ export const logColumns: ColumnDef<Log>[] = [
 
     },
     {
-        accessorKey: "LogType",
+        accessorKey: "logType",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Type" }),
 
     },
