@@ -69,6 +69,7 @@ function HardwareDetail({ caseId }: { caseId: any }) {
                     id: e.id,
                     fileName: e.fileName,
                     fileType: e.fileType,
+                    fileSize: e.fileSize,
                     hash: e.hash,
                     accessDate: (Number(e.accessDate)),
                     formatedAccessDate: formatDate((Number(e.accessDate))),

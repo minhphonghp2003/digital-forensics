@@ -195,7 +195,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                         </DialogContent>
 
                     </Dialog>
-                    <UpdateStatusDialog title={"Update status"} name={"status"} openStatus={openStatus} setOpenStatus={setOpenStatus} defaultStatus={detail.status} handleUpdateStatus={handleUpdateStatus} />
+                    <UpdateStatusDialog title={"Update hardware status"} name={"status"} openStatus={openStatus} setOpenStatus={setOpenStatus} defaultStatus={detail.status} handleUpdateStatus={handleUpdateStatus} />
                 </DropdownMenu>
             )
         },
