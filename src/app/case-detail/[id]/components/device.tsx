@@ -63,8 +63,13 @@ function DeviceDetail({ caseId }: { caseId: any }) {
                 name: e.name,
                 deviceType: e.deviceType,
                 os: e.os,
-                lastBootTime: formatDate(Number(e.lastBootTime)),
-                status: Status[e.status]
+                lastBootTime: Number(e.lastBootTime),
+                formatedLastBootTime: formatDate(Number(e.lastBootTime)),
+                status: Status[e.status],
+                caseId: e.caseId,
+                osVersion: e.osVersion,
+                mac: e.mac,
+                ip: e.ip,
             }
         })} searchKey={'id'}
             extra={

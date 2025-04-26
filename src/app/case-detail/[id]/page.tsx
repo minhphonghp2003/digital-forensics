@@ -82,9 +82,9 @@ function page() {
         account && account.contract.on("EvidenceAdded", (caseId: any, evidenceType: any, evidenceId: any) => {
             fetchCase()
         });
-        account && account.contract.on("EvidenceUpdated", (caseId: any, evidenceType: any, evidenceId: any) => {
-            fetchCase()
-        });
+        // account && account.contract.on("EvidenceUpdated", (caseId: any, evidenceType: any, evidenceId: any) => {
+        //     fetchCase()
+        // });
     }, [account, id])
     async function handleUpdateCase() {
         if (account) {
