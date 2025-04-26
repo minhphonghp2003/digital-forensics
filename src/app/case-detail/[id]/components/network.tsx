@@ -61,7 +61,10 @@ function NetworkDetail({ caseId }: { caseId: any }) {
                 sourcePort: e.sourcePort,
                 destPort: e.destPort,
                 protocol: e.protocol,
-                status: Status[e.status]
+                status: Status[e.status],
+                timestamp: e.timestamp,
+                caseId: e.caseId,
+                dataSize: e.dataSize
             }
         })} searchKey={'id'}
             extra={
