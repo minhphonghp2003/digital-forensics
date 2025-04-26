@@ -51,6 +51,9 @@ function HardwareDetail({ caseId }: { caseId: any }) {
     }
     useEffect(() => {
         fetchDetail()
+        account && account.contract.on("EvidenceUpdated", (caseId: any, evidenceType: any, evidenceId: any) => {
+            evidenceType == "Hardware" && caseId == caseId && fetchDetail()
+        });
     }, [account])
     async function handleAddHardware() {
         if (account?.contract) {
@@ -147,7 +150,13 @@ function HardwareDetail({ caseId }: { caseId: any }) {
                             </div>
 
 
-                            <TextInput title={'Hash'} onChange={(e: any) => { }} />
+                            <TextInput title={'Hash'} onChange={(e: any) => {
+                                setNewHardware({
+                                    ...newHardware,
+                                    hash: e.target.value
+                                })
+
+                            }} />
                         </div>
                         <DialogFooter>
 

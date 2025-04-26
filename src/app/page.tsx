@@ -30,7 +30,6 @@ export default function Home() {
   useEffect(() => {
     fetchUser()
     account && account.contract.on("CaseAdded", (caseId: any, title: any, investigator: any) => {
-      console.log(caseId, title, investigator);
       investigator == account.address && fetchCases()
     });
 

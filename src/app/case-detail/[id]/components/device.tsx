@@ -45,6 +45,9 @@ function DeviceDetail({ caseId }: { caseId: any }) {
     }
     useEffect(() => {
         fetchDetail()
+        account && account.contract.on("EvidenceUpdated", (caseId: any, evidenceType: any, evidenceId: any) => {
+            evidenceType == "Device" && caseId == caseId && fetchDetail()
+        });
     }, [account])
     async function handleAddDevice() {
         if (account?.contract) {

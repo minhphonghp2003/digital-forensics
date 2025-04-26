@@ -41,6 +41,9 @@ function NetworkDetail({ caseId }: { caseId: any }) {
     }
     useEffect(() => {
         fetchDetail()
+        account && account.contract.on("EvidenceUpdated", (caseId: any, evidenceType: any, evidenceId: any) => {
+            evidenceType == "Network" && caseId == caseId && fetchDetail()
+        });
     }, [account])
     async function handleAddNetwork() {
         if (account?.contract) {
@@ -53,7 +56,7 @@ function NetworkDetail({ caseId }: { caseId: any }) {
     }
 
     return (
-        <div className=''><CustomTable title="network" columns={networkColumns} data={network?.map((e: Network) => {
+        <div className=''><CustomTable title="Network" columns={networkColumns} data={network?.map((e: Network) => {
             return {
                 id: e.id,
                 sourceIp: e.sourceIp,

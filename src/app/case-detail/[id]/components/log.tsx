@@ -38,6 +38,9 @@ function LogDetail({ caseId }: { caseId: any }) {
     }
     useEffect(() => {
         fetchDetail()
+        account && account.contract.on("EvidenceUpdated", (caseId: any, evidenceType: any, evidenceId: any) => {
+            evidenceType == "Log" && caseId == caseId && fetchDetail()
+        });
     }, [account])
     async function handleAddLog() {
         if (account?.contract) {
@@ -50,7 +53,7 @@ function LogDetail({ caseId }: { caseId: any }) {
     }
 
     return (
-        <div className=''><CustomTable title="log" columns={logColumns} data={log?.map((e: Log) => {
+        <div className=''><CustomTable title="Log" columns={logColumns} data={log?.map((e: Log) => {
             return {
                 id: e.id,
                 source: e.source,

@@ -33,7 +33,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
     },
     {
         accessorKey: "fileType",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "File name" }),
+        header: ({ column }) => DataTableColumnHeader({ column, title: "File type" }),
 
     },
     {
