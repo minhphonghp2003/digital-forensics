@@ -54,6 +54,7 @@ function LogDetail({ caseId }: { caseId: any }) {
             return {
                 id: e.id,
                 source: e.source,
+                caseId: e.caseId,
                 securityLevel: SecurityLevel[e.securityLevel],
                 logType: LogType[e.logType],
                 timestamp: e.timestamp,

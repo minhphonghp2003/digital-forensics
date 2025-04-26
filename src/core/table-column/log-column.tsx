@@ -2,7 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 
+import TextInput from "@/components/form/text-input"
+import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,9 +14,14 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { AccountContext } from "@/core/context/account.context"
 import { Log } from "@/core/model/edivence/log.model"
+import { updateLog, updateLogStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
+import { useContext, useState } from "react"
 
 
 export const logColumns: ColumnDef<Log>[] = [
@@ -50,6 +58,36 @@ export const logColumns: ColumnDef<Log>[] = [
         id: "actions",
         cell: ({ row }) => {
             let detail = row.original
+            let { account } = useContext(AccountContext)
+            let [open, setOpen] = useState(false)
+            let [openStatus, setOpenStatus] = useState(false)
+            let [newLog, setNewLog] = useState<{
+                source: string,
+                securityLevel: any,
+                logType: any,
+
+            }>({
+                source: detail.source,
+                securityLevel: 0,
+                logType: 0,
+            })
+            async function handleUpdateLog() {
+                if (account) {
+                    let tx = await updateLog({ contract: account.contract, logId: detail.id, caseId: detail.caseId, ...newLog })
+                    if (tx) {
+                        setOpen(false)
+                    }
+                }
+            }
+
+            async function handleUpdateStatus(status: any) {
+                if (account) {
+                    let tx = await updateLogStatus({ contract: account.contract, logId: detail.id, caseId: detail.caseId, newStatus: status })
+                    if (tx) {
+                        setOpenStatus(false)
+                    }
+                }
+            }
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -68,11 +106,92 @@ export const logColumns: ColumnDef<Log>[] = [
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onClick={() => {
-                                alert("Edit")
+                                setOpen(true)
                             }}
                         >View details</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => {
+                                setOpenStatus(true)
+                            }}
+                        >Update status</DropdownMenuItem>
                     </DropdownMenuContent>
-                </DropdownMenu>
+                    <Dialog open={open} onOpenChange={setOpen} >
+                        <DialogContent className="sm:max-w-[800px]">
+                            <DialogHeader>
+                                <DialogTitle>Update log</DialogTitle>
+                                <DialogDescription>
+                                    Update log
+                                </DialogDescription>
+                            </DialogHeader>
+                            <TextInput value={newLog.source} title={'Source'} onChange={(e: any) => {
+                                setNewLog({
+                                    ...newLog,
+                                    source: e.target.value
+                                })
+                            }} />
+                            <div className='flex  gap-2'>
+
+                                <div className='grow flex flex-col gap-2'>
+                                    <Label htmlFor="name" className='mb-2'>
+                                        Security level
+                                    </Label>
+                                    <Select onValueChange={(e) => {
+                                        setNewLog({
+                                            ...newLog,
+                                            securityLevel: e
+                                        })
+                                    }} >
+                                        <div className='flex justify-between'>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select level" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="0">LOW</SelectItem>
+                                                    <SelectItem value="1">MEDIUM</SelectItem>
+                                                    <SelectItem value="2">HIGH</SelectItem>
+                                                    <SelectItem value="3">CRITICAL</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </div>
+                                    </Select>
+                                </div>
+                                <div className='grow flex flex-col gap-2'>
+                                    <Label htmlFor="name" className='mb-2'>
+                                        Log type
+                                    </Label>
+                                    <Select onValueChange={(e) => {
+                                        setNewLog({
+                                            ...newLog,
+                                            logType: e
+                                        })
+                                    }} >
+                                        <div className='flex justify-between'>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select type" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="0">SYSTEM</SelectItem>
+                                                    <SelectItem value="1">SECURITY</SelectItem>
+                                                    <SelectItem value="2">APPLICATION</SelectItem>
+                                                    <SelectItem value="3">NETWORK</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </div>
+                                    </Select>
+                                </div>
+                            </div>
+                            <DialogFooter>
+
+                                <Button onClick={handleUpdateLog} type="submit">Submit</Button>
+                            </DialogFooter>
+                        </DialogContent>
+
+                    </Dialog>
+                    <UpdateStatusDialog title={"Update log status"} name={"status"} openStatus={openStatus} setOpenStatus={setOpenStatus} defaultStatus={detail.status} handleUpdateStatus={handleUpdateStatus} />
+                </DropdownMenu >
+
             )
         },
     },
