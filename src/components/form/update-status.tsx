@@ -20,7 +20,7 @@ function UpdateStatusDialog({ openStatus, setOpenStatus, defaultStatus, handleUp
                     <div className='flex justify-between'>
 
                         <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Update case status" />
+                            <SelectValue placeholder={title} />
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
