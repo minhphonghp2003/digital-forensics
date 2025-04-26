@@ -14,31 +14,37 @@ import {
 import { Hardware } from "@/core/model/edivence/hardware.model"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
+import { Network } from "@/core/model/edivence/network.model"
 
 
-export const hardwareColumns: ColumnDef<Hardware>[] = [
+export const networkColumns: ColumnDef<Network>[] = [
     {
         accessorKey: "id",
         header: "Id",
     },
     {
-        accessorKey: "fileName",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "File name" }),
+        accessorKey: "sourceIp",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Source IP" }),
 
     },
     {
-        accessorKey: "fileType",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "File name" }),
+        accessorKey: "destIp",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Dest. IP" }),
 
     },
     {
-        accessorKey: "hash",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Hash" }),
+        accessorKey: "sourcePort",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Source port" }),
 
     },
     {
-        accessorKey: "accessDate",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Access date" }),
+        accessorKey: "destPort",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Dest. port" }),
+
+    },
+    {
+        accessorKey: "protocol",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Protocol" }),
 
     },
     {

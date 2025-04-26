@@ -80,7 +80,6 @@ function page() {
     useEffect(() => {
         fetchCase()
         account && account.contract.on("EvidenceAdded", (caseId: any, evidenceType: any, evidenceId: any) => {
-            console.log(caseId, evidenceType, evidenceId);
             fetchCase()
         });
     }, [account, id])

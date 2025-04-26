@@ -9,6 +9,6 @@ export interface Device {
   osVersion: string;
   mac: string;
   ip: string;
-  lastBootTime: number;
+  lastBootTime: Date;
   status: Status;
 }

@@ -16,7 +16,7 @@ import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 
 
-export const hardwareColumns: ColumnDef<Device>[] = [
+export const deviceColumns: ColumnDef<Device>[] = [
     {
         accessorKey: "id",
         header: "Id",

@@ -14,31 +14,32 @@ import {
 import { Hardware } from "@/core/model/edivence/hardware.model"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
+import { Log } from "@/core/model/edivence/log.model"
 
 
-export const hardwareColumns: ColumnDef<Hardware>[] = [
+export const logColumns: ColumnDef<Log>[] = [
     {
         accessorKey: "id",
         header: "Id",
     },
     {
-        accessorKey: "fileName",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "File name" }),
+        accessorKey: "source",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Source" }),
 
     },
     {
-        accessorKey: "fileType",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "File name" }),
+        accessorKey: "securityLevel",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Security level" }),
 
     },
     {
-        accessorKey: "hash",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Hash" }),
+        accessorKey: "LogType",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Type" }),
 
     },
     {
-        accessorKey: "accessDate",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Access date" }),
+        accessorKey: "timestamp",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Timestamp" }),
 
     },
     {
