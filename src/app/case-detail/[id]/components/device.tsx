@@ -13,7 +13,6 @@ import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 function DeviceDetail({ caseId }: { caseId: any }) {
-    // name, deviceType, os, osVersion, mac, ip, lastBootTime
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
     let [device, setDevice] = useState<Device[] | null>(null)

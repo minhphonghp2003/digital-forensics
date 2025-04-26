@@ -28,13 +28,13 @@ export const networkColumns: ColumnDef<Network>[] = [
 
     },
     {
-        accessorKey: "destIp",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Dest. IP" }),
+        accessorKey: "sourcePort",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Source port" }),
 
     },
     {
-        accessorKey: "sourcePort",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Source port" }),
+        accessorKey: "destIp",
+        header: ({ column }) => DataTableColumnHeader({ column, title: "Dest. IP" }),
 
     },
     {
