@@ -55,7 +55,7 @@ function NetworkDetail({ caseId }: { caseId: any }) {
     return (
         <div className=''><CustomTable title="network" columns={networkColumns} data={network?.map((e: Network) => {
             return {
-                id:e.id,
+                id: e.id,
                 sourceIp: e.sourceIp,
                 destIp: e.destIp,
                 sourcePort: e.sourcePort,
@@ -67,7 +67,7 @@ function NetworkDetail({ caseId }: { caseId: any }) {
             extra={
                 <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
-                        <Button variant="outline">Add Network</Button>
+                        <Button variant="outline">Add network</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[800px]">
                         <DialogHeader>

@@ -63,7 +63,7 @@ function LogDetail({ caseId }: { caseId: any }) {
             extra={
                 <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
-                        <Button variant="outline">Add Log</Button>
+                        <Button variant="outline">Add log</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[800px]">
                         <DialogHeader>

@@ -2,7 +2,10 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 
+import DatePickerInput from '@/components/form/date-picker-input'
+import TextInput from '@/components/form/text-input'
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -11,11 +14,12 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { AccountContext } from "@/core/context/account.context"
 import { Hardware } from "@/core/model/edivence/hardware.model"
+import { updateHardware } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
-
-
+import { useContext, useState } from "react"
 export const hardwareColumns: ColumnDef<Hardware>[] = [
     {
         accessorKey: "id",
@@ -37,7 +41,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
 
     },
     {
-        accessorKey: "accessDate",
+        accessorKey: "formatedAccessDate",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Access date" }),
 
     },
@@ -50,6 +54,44 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
         id: "actions",
         cell: ({ row }) => {
             let detail = row.original
+            console.log(detail);
+
+            let { account } = useContext(AccountContext)
+            let [open, setOpen] = useState(false)
+            let [newHardware, setNewHardware] = useState<{
+                fileName: string,
+                fileType: string,
+                fileSize: any,
+                hash: string,
+                createdDate: any,
+                modifiedDate: any,
+                accessDate: any,
+                diskType: any,
+                filePath: any
+            }>({
+                accessDate: detail.accessDate,
+                createdDate: detail.createdDate,
+                modifiedDate: detail.modifiedDate,
+                diskType: detail.diskType,
+                filePath: detail.filePath,
+                fileName: detail.fileName,
+                fileSize: detail.fileSize,
+                fileType: detail.fileType,
+                hash: detail.hash
+            })
+            console.log(newHardware);
+
+            async function handleUpdateHardware() {
+                if (account) {
+                    console.log(newHardware);
+
+                    let tx = await updateHardware({ contract: account.contract, hardwareId: detail.id, caseId: detail.caseId, ...newHardware })
+                    if (tx) {
+                        setOpen(false)
+                    }
+                }
+            }
+
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -68,10 +110,80 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onClick={() => {
-                                alert("Edit")
+                                setOpen(true)
                             }}
                         >View details</DropdownMenuItem>
                     </DropdownMenuContent>
+                    <Dialog open={open} onOpenChange={setOpen} >
+                        <DialogContent className="sm:max-w-[800px]">
+                            <DialogHeader>
+                                <DialogTitle>Update hardware</DialogTitle>
+                                <DialogDescription>
+                                    Update hardware
+                                </DialogDescription>
+                            </DialogHeader>
+                            <div className='flex flex-col gap-2'>
+                                <div className='flex gap-6'>
+                                    <div className='grow flex flex-col gap-2'>
+                                        <TextInput value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
+                                            setNewHardware({
+                                                ...newHardware,
+                                                fileName: e.target.value
+                                            })
+                                        }} />
+                                        <TextInput value={newHardware.fileSize} title={'File size'} onChange={(e: any) => {
+                                            setNewHardware({
+                                                ...newHardware,
+                                                fileSize: e.target.value
+                                            })
+                                        }} />
+                                        <DatePickerInput title={'Access date'} onDatePicked={(e: any) => {
+                                            setNewHardware({
+                                                ...newHardware,
+                                                accessDate: Date.parse(e)
+                                            })
+                                        }} selected={newHardware?.accessDate} />
+                                    </div>
+                                    <div className='grow flex flex-col gap-2'>
+                                        <TextInput value={newHardware.fileType} title={'File type'} onChange={(e: any) => {
+                                            setNewHardware({
+                                                ...newHardware,
+                                                fileType: e.target.value
+                                            })
+
+                                        }} />
+                                        <TextInput value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
+                                            setNewHardware({
+                                                ...newHardware,
+                                                filePath: e.target.value
+                                            })
+
+                                        }} />
+                                        <TextInput value={newHardware.diskType} title={'Disk type'} onChange={(e: any) => {
+                                            setNewHardware({
+                                                ...newHardware,
+                                                diskType: e.target.value
+                                            })
+
+                                        }} />
+                                    </div>
+                                </div>
+
+                                <TextInput title={'Hash'} value={newHardware.hash} onChange={(e: any) => {
+                                    setNewHardware({
+                                        ...newHardware,
+                                        hash: e.target.value
+                                    })
+
+                                }} />
+                            </div>
+                            <DialogFooter>
+
+                                <Button onClick={handleUpdateHardware} type="submit">Submit</Button>
+                            </DialogFooter>
+                        </DialogContent>
+
+                    </Dialog>
                 </DropdownMenu>
             )
         },

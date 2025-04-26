@@ -70,8 +70,14 @@ function HardwareDetail({ caseId }: { caseId: any }) {
                     fileName: e.fileName,
                     fileType: e.fileType,
                     hash: e.hash,
-                    accessDate: formatDate(Number(e.accessDate)),
-                    status: Status[e.status]
+                    accessDate: (Number(e.accessDate)),
+                    formatedAccessDate: formatDate((Number(e.accessDate))),
+                    status: Status[e.status],
+                    caseId: e.caseId,
+                    createdDate: (Number(e.createdDate)),
+                    modifiedDate: (Number(e.modifiedDate)),
+                    diskType: e.diskType,
+                    filePath: e.filePath,
                 }
             })
 
