@@ -13,6 +13,7 @@ import { Status } from '@/utils/enum'
 import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 function HardwareDetail({ caseId }: { caseId: any }) {
 
     let { account } = useContext(AccountContext)
@@ -56,13 +57,26 @@ function HardwareDetail({ caseId }: { caseId: any }) {
         });
     }, [account])
     async function handleAddHardware() {
-        if (account?.contract) {
+        try {
+
             let tx = await createHardware({ contract: account.contract, caseId: caseId, ...newHardware })
             if (tx) {
                 setOpen(false)
                 fetchDetail()
+            } else {
+                setOpen(false)
+                toast("Error", {
+                    description: "Error occur while calling contract"
+                })
             }
+        } catch (error) {
+            setOpen(false)
+            toast("Error", {
+                description: "Error occur while calling contract"
+            })
         }
+
+
     }
 
     return (

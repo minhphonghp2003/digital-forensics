@@ -10,6 +10,7 @@ import { createNetwork, getNetwork } from '@/service/evidence.service'
 import { Status } from '@/utils/enum'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 function NetworkDetail({ caseId }: { caseId: any }) {
     // sourceIp, destIp, sourcePort, destPort, protocol, dataSize
     let { account } = useContext(AccountContext)
@@ -46,12 +47,23 @@ function NetworkDetail({ caseId }: { caseId: any }) {
         });
     }, [account])
     async function handleAddNetwork() {
-        if (account?.contract) {
+        try {
+
             let tx = await createNetwork({ contract: account.contract, caseId: caseId, ...newNetwork })
             if (tx) {
                 setOpen(false)
                 fetchDetail()
+            } else {
+                setOpen(false)
+                toast("Error", {
+                    description: "Error occur while calling contract"
+                })
             }
+        } catch (error) {
+            setOpen(false)
+            toast("Error", {
+                description: "Error occur while calling contract"
+            })
         }
     }
 

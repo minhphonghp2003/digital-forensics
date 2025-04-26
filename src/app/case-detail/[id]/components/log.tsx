@@ -12,6 +12,7 @@ import { createLog, getLog } from '@/service/evidence.service'
 import { LogType, SecurityLevel, Status } from '@/utils/enum'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 function LogDetail({ caseId }: { caseId: any }) {
     // source, securityLevel, logType
     let { account } = useContext(AccountContext)
@@ -43,12 +44,23 @@ function LogDetail({ caseId }: { caseId: any }) {
         });
     }, [account])
     async function handleAddLog() {
-        if (account?.contract) {
+        try {
+
             let tx = await createLog({ contract: account.contract, caseId: caseId, ...newLog })
             if (tx) {
                 setOpen(false)
                 fetchDetail()
+            } else {
+                setOpen(false)
+                toast("Error", {
+                    description: "Error occur while calling contract"
+                })
             }
+        } catch (error) {
+            setOpen(false)
+            toast("Error", {
+                description: "Error occur while calling contract"
+            })
         }
     }
 

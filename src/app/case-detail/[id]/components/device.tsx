@@ -12,6 +12,7 @@ import { Status } from '@/utils/enum'
 import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 function DeviceDetail({ caseId }: { caseId: any }) {
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
@@ -42,6 +43,7 @@ function DeviceDetail({ caseId }: { caseId: any }) {
 
             setDevice(result)
         }
+
     }
     useEffect(() => {
         fetchDetail()
@@ -50,13 +52,26 @@ function DeviceDetail({ caseId }: { caseId: any }) {
         });
     }, [account])
     async function handleAddDevice() {
-        if (account?.contract) {
+        try {
+
             let tx = await createDevice({ contract: account.contract, caseId: caseId, ...newDevice })
             if (tx) {
                 setOpen(false)
                 fetchDetail()
+            } else {
+                setOpen(false)
+                toast("Error", {
+                    description: "Error occur while calling contract"
+                })
             }
+        } catch (error) {
+            setOpen(false)
+            toast("Error", {
+                description: "Error occur while calling contract"
+            })
         }
+
+
     }
 
     return (

@@ -21,6 +21,7 @@ import { updateDevice, updateDeviceStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
+import { toast } from "sonner"
 
 
 export const deviceColumns: ColumnDef<Device>[] = [
@@ -79,21 +80,44 @@ export const deviceColumns: ColumnDef<Device>[] = [
             })
 
             async function handleUpdateDevice() {
-                if (account) {
+                try {
+
                     let tx = await updateDevice({ contract: account.contract, deviceId: detail.id, caseId: detail.caseId, ...newDevice })
                     if (tx) {
                         setOpen(false)
+                    } else {
+                        setOpen(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpen(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
             }
 
             async function handleUpdateStatus(status: any) {
-                if (account) {
+                try {
+
                     let tx = await updateDeviceStatus({ contract: account.contract, deviceId: detail.id, caseId: detail.caseId, newStatus: status })
                     if (tx) {
                         setOpenStatus(false)
+                    } else {
+                        setOpenStatus(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpenStatus(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
+
             }
             return (
                 <DropdownMenu>
@@ -178,7 +202,7 @@ export const deviceColumns: ColumnDef<Device>[] = [
                                         }} />
                                     </div>
                                 </div>
-                                <DatePickerInput  title={'Last boot time'} onDatePicked={(e: any) => {
+                                <DatePickerInput title={'Last boot time'} onDatePicked={(e: any) => {
                                     setNewDevice({
                                         ...newDevice,
                                         lastBootTime: Date.parse(e)

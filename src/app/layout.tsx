@@ -1,5 +1,6 @@
 import AppContextProvider from "@/app/app-context-provider";
 import NavBar from "@/components/layout/nav-bar";
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -34,6 +35,8 @@ export default function RootLayout({
             {children}
           </div>
         </AppContextProvider>
+        <Toaster />
+
       </body>
     </html>
   );

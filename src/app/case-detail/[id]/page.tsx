@@ -14,6 +14,7 @@ import { Button } from 'components/ui/button';
 import { useParams } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
+import { toast } from 'sonner';
 
 function page() {
     const params = useParams<{ id: string }>()
@@ -87,10 +88,23 @@ function page() {
     async function handleUpdateCase() {
         if (account) {
 
-            let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
-            if (tx) {
+            try {
+
+                let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
+                if (tx) {
+                    setOpen(false)
+                    fetchCase()
+                } else {
+                    setOpen(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
+                }
+            } catch (error) {
                 setOpen(false)
-                fetchCase()
+                toast("Error", {
+                    description: "Error occur while calling contract"
+                })
             }
 
         }

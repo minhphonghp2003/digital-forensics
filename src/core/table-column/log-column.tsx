@@ -22,6 +22,7 @@ import { updateLog, updateLogStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
+import { toast } from "sonner"
 
 
 export const logColumns: ColumnDef<Log>[] = [
@@ -72,21 +73,46 @@ export const logColumns: ColumnDef<Log>[] = [
                 logType: 0,
             })
             async function handleUpdateLog() {
-                if (account) {
+
+                try {
+
                     let tx = await updateLog({ contract: account.contract, logId: detail.id, caseId: detail.caseId, ...newLog })
                     if (tx) {
                         setOpen(false)
+                    } else {
+                        setOpen(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpen(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
+
             }
 
             async function handleUpdateStatus(status: any) {
-                if (account) {
+                try {
+
                     let tx = await updateLogStatus({ contract: account.contract, logId: detail.id, caseId: detail.caseId, newStatus: status })
                     if (tx) {
                         setOpenStatus(false)
+                    } else {
+                        setOpenStatus(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpenStatus(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
+
             }
             return (
                 <DropdownMenu>

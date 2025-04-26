@@ -20,6 +20,7 @@ import { updateNetwork, updateNetworkStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
+import { toast } from "sonner"
 
 
 export const networkColumns: ColumnDef<Network>[] = [
@@ -80,21 +81,45 @@ export const networkColumns: ColumnDef<Network>[] = [
                 dataSize: detail.dataSize,
             })
             async function handleUpdateNetwork() {
-                if (account) {
+
+                try {
+
                     let tx = await updateNetwork({ contract: account.contract, networkId: detail.id, caseId: detail.caseId, ...newNetwork })
                     if (tx) {
                         setOpen(false)
+                    } else {
+                        setOpen(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpen(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
             }
 
             async function handleUpdateStatus(status: any) {
-                if (account) {
+                try {
+
                     let tx = await updateNetworkStatus({ contract: account.contract, networkId: detail.id, caseId: detail.caseId, newStatus: status })
                     if (tx) {
                         setOpenStatus(false)
+                    } else {
+                        setOpenStatus(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpenStatus(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
+
             }
             return (
                 <DropdownMenu>

@@ -21,6 +21,7 @@ import { updateHardware, updateHardwareStatus } from "@/service/evidence.service
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
+import { toast } from "sonner"
 export const hardwareColumns: ColumnDef<Hardware>[] = [
     {
         accessorKey: "id",
@@ -81,21 +82,45 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
             })
 
             async function handleUpdateHardware() {
-                if (account) {
+                try {
+
                     let tx = await updateHardware({ contract: account.contract, hardwareId: detail.id, caseId: detail.caseId, ...newHardware })
                     if (tx) {
                         setOpen(false)
+                    } else {
+                        setOpen(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpen(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
+
             }
 
             async function handleUpdateStatus(status: any) {
-                if (account) {
+                try {
+
                     let tx = await updateHardwareStatus({ contract: account.contract, hardwareId: detail.id, caseId: detail.caseId, newStatus: status })
                     if (tx) {
                         setOpenStatus(false)
+                    } else {
+                        setOpenStatus(false)
+                        toast("Error", {
+                            description: "Error occur while calling contract"
+                        })
                     }
+                } catch (error) {
+                    setOpenStatus(false)
+                    toast("Error", {
+                        description: "Error occur while calling contract"
+                    })
                 }
+               
             }
 
             return (
