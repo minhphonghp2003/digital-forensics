@@ -14,6 +14,7 @@ import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 function HardwareDetail({ caseId }: { caseId: any }) {
+
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
     let [hardware, setHardware] = useState<Hardware[] | null>(null)
@@ -40,15 +41,17 @@ function HardwareDetail({ caseId }: { caseId: any }) {
     })
     let fetchDetail = async () => {
         if (account?.contract) {
+
             let ids = await getCaseHardwareIds({ contract: account.contract, caseId })
             let result = []
             result = await Promise.all(ids.map((e: any) => getHardware({ contract: account.contract, hardwareId: e })));
+
             setHardware(result)
         }
     }
     useEffect(() => {
         fetchDetail()
-    }, [])
+    }, [account])
     async function handleAddHardware() {
         if (account?.contract) {
             let tx = await createHardware({ contract: account.contract, caseId: caseId, ...newHardware })
