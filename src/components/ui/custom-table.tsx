@@ -5,7 +5,7 @@ import { BsBox } from 'react-icons/bs'
 function CustomTable({ columns, data, title, extra, searchKey,
 }: any) {
     return (
-        <div className=" shadow  rounded-xl mx-auto p-10">
+        <div className="border-1 shadow  rounded-xl mx-auto p-10">
             <p className='font-bold flex items-center gap-2 '> <BsBox color="orange" />{title}</p>
             <DataTable searchKey={searchKey} columns={columns} data={data}
                 extraWidget={

@@ -5,7 +5,7 @@ function infoBox({ className, data, title }: { data: any, className?: string, ti
 
 
     return (
-        <div className={`shadow p-7  rounded-lg   ${className}`}>
+        <div className={`shadow p-7 border-1 rounded-lg   ${className}`}>
             <p className="flex items-center gap-3 font-bold my-4 text-xl"><BsBox color="orange" />
                 {title}</p>
             <div>

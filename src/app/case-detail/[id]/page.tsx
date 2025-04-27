@@ -193,7 +193,7 @@ function page() {
                     </div>
                 </div>
                 <p>
-                    Title: <span className=''>
+                    <span className=''>
                         {caseDetail?.title || '__'}
                     </span>
                 </p>
