@@ -17,10 +17,13 @@ import { checkIsOwner, connectWallet } from "@/service/ether.service";
 import { addInvestigator, getInvestigator, updateInvestigator } from "@/service/investigator.service";
 import { Button } from "components/ui/button";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from "react";
-function NavBar() {
 
+function NavBar() {
+    const router = useRouter();
     const { account, setAccount } = useContext(AccountContext);
+    const [search, setSearch] = useState("")
     const [user, setUser] = useState<Investigator | null>(null)
     const [nickname, setNickname] = useState<string>("")
     const [open, setOpen] = useState(false);
@@ -28,6 +31,7 @@ function NavBar() {
     const [addAddress, setAddAddress] = useState<any>();
     const [addNickname, setAddNickname] = useState<any>();
     const [isOwner, setIsOwner] = useState(false)
+    let form: any
     const fetchUser = async () => {
         if (account) {
             let result = await getInvestigator(account.contract, account.address);
@@ -89,7 +93,18 @@ function NavBar() {
 
                     account ? <ul className="flex space-x-4 items-center">
                         <li>
-                            <Input placeholder="Search..." />
+                            <Input
+                                onKeyDown={
+                                    (event) => {
+                                        if (event.key !== 'Enter') {
+                                            return
+                                        }
+                                        router.push("/search?searchKey=" + search)
+
+                                    }
+                                }
+                                value={search} onChange={(e) => { setSearch(e.target.value) }}
+                                placeholder="Search..." />
                         </li>
                         <li>
                             <DropdownMenu>
