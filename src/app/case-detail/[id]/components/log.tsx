@@ -13,7 +13,7 @@ import { LogType, SecurityLevel, Status } from '@/utils/enum'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-function LogDetail({ caseId }: { caseId: any }) {
+function LogDetail({ caseId, investigator }: { caseId: any, investigator: any }) {
     // source, securityLevel, logType
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
@@ -77,7 +77,7 @@ function LogDetail({ caseId }: { caseId: any }) {
             }
         })} searchKey={'id'}
             extra={
-                <Dialog open={open} onOpenChange={setOpen} >
+                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add log</Button>
                     </DialogTrigger>

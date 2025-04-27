@@ -14,7 +14,7 @@ import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-function HardwareDetail({ caseId }: { caseId: any }) {
+function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: any }) {
 
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
@@ -101,7 +101,7 @@ function HardwareDetail({ caseId }: { caseId: any }) {
 
         } searchKey={'id'}
             extra={
-                <Dialog open={open} onOpenChange={setOpen} >
+                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add hardware</Button>
                     </DialogTrigger>

@@ -12,7 +12,7 @@ import { formatDate, truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
 import { useContext, useState } from 'react';
 
-function AllCase({ cases }: { cases?: Case[] | null }) {
+function AllCase({ cases, userAddress }: { userAddress: any, cases?: Case[] | null }) {
     const [open, setOpen] = useState(false)
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -47,7 +47,7 @@ function AllCase({ cases }: { cases?: Case[] | null }) {
 
             <CustomTable searchKey="id" btnName="Add" columns={caseColumns} title="All cases" data={data}
                 extra={
-                    <Dialog open={open} onOpenChange={setOpen} >
+                    userAddress == account.address && <Dialog open={open} onOpenChange={setOpen} >
                         <DialogTrigger asChild>
                             <Button variant="outline">Add case</Button>
                         </DialogTrigger>

@@ -49,7 +49,7 @@ function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Inves
             },
             {
                 title: "Created at",
-                value: formatDate(Number(latestCase?.createdDate ?? 0) * 1000) || "N/A"
+                value: latestCase?.createdDate ? formatDate(Number(latestCase?.createdDate ?? 0) * 1000) : "N/A"
             },
 
             ]} className=" w-full" ></InfoBox>

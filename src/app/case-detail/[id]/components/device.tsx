@@ -13,7 +13,7 @@ import { formatDate } from '@/utils/helper'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-function DeviceDetail({ caseId }: { caseId: any }) {
+function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any }) {
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
     let [device, setDevice] = useState<Device[] | null>(null)
@@ -91,7 +91,7 @@ function DeviceDetail({ caseId }: { caseId: any }) {
             }
         })} searchKey={'id'}
             extra={
-                <Dialog open={open} onOpenChange={setOpen} >
+                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add device</Button>
                     </DialogTrigger>

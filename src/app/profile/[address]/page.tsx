@@ -95,7 +95,7 @@ function ProfilePage() {
 
           </div>
           <div>
-            <AllCase cases={cases} />
+            <AllCase cases={cases} userAddress={address} />
           </div>
         </div> :
           <div className="flex flex-col items-center justify-center h-full ">

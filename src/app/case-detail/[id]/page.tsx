@@ -123,34 +123,36 @@ function page() {
 
     return (
         <div>
-            <Dialog open={open} onOpenChange={setOpen} >
-                <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                        <DialogTitle>Update case</DialogTitle>
-                        <DialogDescription>
-                            Update case information
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="name" className="text-right">
-                                Title
-                            </Label>
-                            <Input id="name" value={title} onChange={(e) => { setTitle(e.target.value) }} className="col-span-3" />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Label htmlFor="username" className="text-right">
-                                Description
-                            </Label>
-                            <Input id="username" value={description} onChange={(e) => { setDescription(e.target.value) }} className="col-span-3" />
-                        </div>
-                    </div>
-                    <DialogFooter>
-                        <Button onClick={handleUpdateCase} type="submit">Submit</Button>
-                    </DialogFooter>
-                </DialogContent>
+            {
 
-            </Dialog>
+                account?.address == caseDetail?.investigator && <Dialog open={open} onOpenChange={setOpen} >
+                    <DialogContent className="sm:max-w-[425px]">
+                        <DialogHeader>
+                            <DialogTitle>Update case</DialogTitle>
+                            <DialogDescription>
+                                Update case information
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="grid gap-4 py-4">
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="name" className="text-right">
+                                    Title
+                                </Label>
+                                <Input id="name" value={title} onChange={(e) => { setTitle(e.target.value) }} className="col-span-3" />
+                            </div>
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="username" className="text-right">
+                                    Description
+                                </Label>
+                                <Input id="username" value={description} onChange={(e) => { setDescription(e.target.value) }} className="col-span-3" />
+                            </div>
+                        </div>
+                        <DialogFooter>
+                            <Button onClick={handleUpdateCase} type="submit">Submit</Button>
+                        </DialogFooter>
+                    </DialogContent>
+
+                </Dialog>}
             <Dialog open={openStatus} onOpenChange={setOpenStatus} >
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
@@ -186,10 +188,13 @@ function page() {
 
                         navigator.clipboard.writeText(caseDetail?.id ?? "N/A");
                     }}>
-                        Case #{truncateFromMiddle(id)} <CiEdit onClick={() => { setOpen(true) }} color='orange' className='cursor-pointer' />
+                        Case #{truncateFromMiddle(id)}{
+
+                            account?.address == caseDetail?.investigator && <CiEdit onClick={() => { setOpen(true) }} color='orange' className='cursor-pointer' />
+                        }
                     </p>
                     <div>
-                        <Badge className='cursor-pointer' onClick={() => { setOpenStatus(true) }} variant={status == "ACTIVE" ? "active" : status == "CLOSED" ? "closed" : "deleted"}>{status}</Badge>
+                        <Badge className='cursor-pointer' onClick={() => { account?.address == caseDetail?.investigator && setOpenStatus(true) }} variant={status == "ACTIVE" ? "active" : status == "CLOSED" ? "closed" : "deleted"}>{status}</Badge>
                     </div>
                 </div>
                 <p>

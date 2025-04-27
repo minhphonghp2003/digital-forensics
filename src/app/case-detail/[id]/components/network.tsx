@@ -11,7 +11,7 @@ import { Status } from '@/utils/enum'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
-function NetworkDetail({ caseId }: { caseId: any }) {
+function NetworkDetail({ caseId, investigator }: { caseId: any, investigator: any }) {
     // sourceIp, destIp, sourcePort, destPort, protocol, dataSize
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
@@ -83,7 +83,7 @@ function NetworkDetail({ caseId }: { caseId: any }) {
             }
         })} searchKey={'id'}
             extra={
-                <Dialog open={open} onOpenChange={setOpen} >
+                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add network</Button>
                     </DialogTrigger>
