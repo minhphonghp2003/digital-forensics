@@ -119,12 +119,6 @@ function NavBar() {
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    {
-                                        isOwner && <DropdownMenuGroup>
-                                            <DropdownMenuItem onClick={() => { setOpenAdd(true) }}>Add investigator</DropdownMenuItem>
-                                        </DropdownMenuGroup>
-                                    }
-
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </li>
@@ -148,35 +142,6 @@ function NavBar() {
                                     <DialogFooter>
                                         <Button onClick={() => {
                                             handleUpdate()
-
-                                        }} type="submit">Save changes</Button>
-                                    </DialogFooter>
-                                </DialogContent>
-                            </Dialog>
-                            <Dialog open={openAdd && isOwner} onOpenChange={setOpenAdd}>
-                                <DialogContent className="sm:max-w-[425px]">
-                                    <DialogHeader>
-                                        <DialogTitle>Add investigator</DialogTitle>
-
-                                    </DialogHeader>
-                                    <div className="grid gap-4 py-4">
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="name" className="text-right">
-                                                Address
-                                            </Label>
-                                            <Input value={addAddress} onChange={e => setAddAddress(e.target.value)} id="name" className="col-span-3" />
-                                        </div>
-                                        <div className="grid grid-cols-4 items-center gap-4">
-                                            <Label htmlFor="name" className="text-right">
-                                                Nickname
-                                            </Label>
-                                            <Input value={addNickname} onChange={e => setAddNickname(e.target.value)} id="name" className="col-span-3" />
-                                        </div>
-
-                                    </div>
-                                    <DialogFooter>
-                                        <Button onClick={() => {
-                                            handleAddInvestigator()
 
                                         }} type="submit">Save changes</Button>
                                     </DialogFooter>

@@ -204,7 +204,7 @@ function page() {
                 </p>
             </div>
             <BasicCaseInfo caseDetail={caseDetail} hardware={hardware} device={device} network={network} log={log} />
-            <DetailTable caseId={id} />
+            <DetailTable investigator={caseDetail?.investigator} caseId={id} />
         </div>
     )
 }
