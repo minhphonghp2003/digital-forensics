@@ -113,7 +113,11 @@ function SearchPage() {
         <div className='flex flex-col gap-8'>
             <p className='text-xl text-orange-400'> Search result for: {search}</p>
             {
-                investigator && <div>
+                investigator && <div className='hover:shadow-xl hover:cursor-pointer' onClick={
+                    () => {
+                        router.push("/profile/" + search)
+                    }
+                }>
 
 
                     <InfoBox title="Investigator" data={[{
