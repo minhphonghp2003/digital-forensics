@@ -31,7 +31,6 @@ function NavBar() {
     const [addAddress, setAddAddress] = useState<any>();
     const [addNickname, setAddNickname] = useState<any>();
     const [isOwner, setIsOwner] = useState(false)
-    let form: any
     const fetchUser = async () => {
         if (account) {
             let result = await getInvestigator(account.contract, account.address);

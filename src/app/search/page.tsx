@@ -13,12 +13,13 @@ import { getDevice, getHardware, getLog, getNetwork } from '@/service/evidence.s
 import { getInvestigator } from '@/service/investigator.service'
 import { LogType, SecurityLevel, Status } from '@/utils/enum'
 import { formatDate } from '@/utils/helper'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useContext, useEffect, useState } from 'react'
 
 function SearchPage() {
     const searchParams = useSearchParams()
     const search = searchParams.get('searchKey')
+    const router = useRouter();
     let { account } = useContext(AccountContext)
     let [investigator, setInvestigator] = useState<Investigator | null>(null)
     let [caseDetail, setCaseDetail] = useState<Case | null>(null)
@@ -136,8 +137,8 @@ function SearchPage() {
             {
 
                 caseDetail?.id ? <div className='hover:shadow-xl hover:cursor-pointer' onClick={
-                    ()=>{
-                        
+                    () => {
+                        router.push("/case-detail/" + caseDetail.id)
                     }
                 }>
                     <InfoBox title="Case detail" data={[
@@ -171,187 +172,219 @@ function SearchPage() {
                 </div> : <div></div>
             }
             {
-                hardware?.id ? <InfoBox title="Hardware" data={[
-                    {
-                        title: "ID",
-                        value: hardware.id
-                    },
-                    {
-                        title: "File name",
-                        value: hardware.fileName
-                    },
-                    {
-                        title: "File path",
-                        value: hardware.filePath
-                    },
-                    {
-                        title: "File size",
-                        value: hardware.fileSize
-                    },
-                    {
-                        title: "File type",
-                        value: hardware.fileType
-                    },
-                    {
-                        title: "Hash",
-                        value: hardware?.hash || '__'
-                    },
-                    {
-                        title: "Disk type",
-                        value: hardware?.diskType || '__'
-                    },
-                    {
-                        title: "Status",
-                        value: Status[hardware.status]
-                    },
-                    {
-                        title: "Case",
-                        value: hardware.caseId,
-                    },
-                    {
-                        title: "Created at",
-                        value: formatDate(Number(hardware?.createdDate) * 1000) || '__'
-                    },
+                hardware?.id ?
+                    <div className='hover:shadow-xl hover:cursor-pointer' onClick={
+                        () => {
+                            router.push("/case-detail/" + hardware.caseId)
+                        }
+                    }>
 
-                    {
-                        title: "Access at",
-                        value: formatDate(Number(hardware?.accessDate) * 1000) || '__'
-                    },
-                    {
-                        title: "Modified at",
-                        value: formatDate(Number(hardware?.modifiedDate) * 1000) || '__'
-                    },
+                        <InfoBox title="Hardware" data={[
+                            {
+                                title: "ID",
+                                value: hardware.id
+                            },
+                            {
+                                title: "File name",
+                                value: hardware.fileName
+                            },
+                            {
+                                title: "File path",
+                                value: hardware.filePath
+                            },
+                            {
+                                title: "File size",
+                                value: hardware.fileSize
+                            },
+                            {
+                                title: "File type",
+                                value: hardware.fileType
+                            },
+                            {
+                                title: "Hash",
+                                value: hardware?.hash || '__'
+                            },
+                            {
+                                title: "Disk type",
+                                value: hardware?.diskType || '__'
+                            },
+                            {
+                                title: "Status",
+                                value: Status[hardware.status]
+                            },
+                            {
+                                title: "Case",
+                                value: hardware.caseId,
+                            },
+                            {
+                                title: "Created at",
+                                value: formatDate(Number(hardware?.createdDate) * 1000) || '__'
+                            },
 
-                ]} className=" w-full" ></InfoBox> : ""
+                            {
+                                title: "Access at",
+                                value: formatDate(Number(hardware?.accessDate) * 1000) || '__'
+                            },
+                            {
+                                title: "Modified at",
+                                value: formatDate(Number(hardware?.modifiedDate) * 1000) || '__'
+                            },
+
+                        ]} className=" w-full" ></InfoBox> </div> : ""
+
             }
             {
-                device?.id ? <InfoBox title="Device" data={[
-                    {
-                        title: "ID",
-                        value: device.id
-                    },
-                    {
-                        title: "Name",
-                        value: device.name
-                    },
-                    {
-                        title: "Type",
-                        value: device.deviceType
-                    },
-                    {
-                        title: "IP",
-                        value: device.ip
-                    },
-                    {
-                        title: "MAC",
-                        value: device.mac
-                    },
-                    {
-                        title: "Os",
-                        value: device?.os || '__'
-                    },
-                    {
-                        title: "Os version",
-                        value: device?.osVersion || '__'
-                    },
-                    {
-                        title: "Status",
-                        value: Status[device.status]
-                    },
-                    {
-                        title: "Case",
-                        value: device.caseId,
-                    },
-                    {
-                        title: "Last boot time",
-                        value: formatDate(Number(device?.lastBootTime) * 1000) || '__'
-                    },
+                device?.id ?
+                    <div className='hover:shadow-xl hover:cursor-pointer' onClick={
+                        () => {
+                            router.push("/case-detail/" + device.caseId)
+                        }
+                    }>
+                        <InfoBox title="Device" data={[
+                            {
+                                title: "ID",
+                                value: device.id
+                            },
+                            {
+                                title: "Name",
+                                value: device.name
+                            },
+                            {
+                                title: "Type",
+                                value: device.deviceType
+                            },
+                            {
+                                title: "IP",
+                                value: device.ip
+                            },
+                            {
+                                title: "MAC",
+                                value: device.mac
+                            },
+                            {
+                                title: "Os",
+                                value: device?.os || '__'
+                            },
+                            {
+                                title: "Os version",
+                                value: device?.osVersion || '__'
+                            },
+                            {
+                                title: "Status",
+                                value: Status[device.status]
+                            },
+                            {
+                                title: "Case",
+                                value: device.caseId,
+                            },
+                            {
+                                title: "Last boot time",
+                                value: formatDate(Number(device?.lastBootTime) * 1000) || '__'
+                            },
 
 
 
-                ]} className=" w-full" ></InfoBox> : ""
+                        ]} className=" w-full" ></InfoBox>
+                    </div>
+                    : ""
             }
             {
-                log?.id ? <InfoBox title="Log" data={[
-                    {
-                        title: "ID",
-                        value: log.id
-                    },
-                    {
-                        title: "Source",
-                        value: log.source
-                    },
-                    {
-                        title: "Log type",
-                        value: LogType[log.logType]
-                    },
-                    {
-                        title: "Security level",
-                        value: SecurityLevel[log.securityLevel]
-                    },
-                    {
-                        title: "Status",
-                        value: Status[log.status]
-                    },
-                    {
-                        title: "Case",
-                        value: log.caseId,
-                    },
-                    {
-                        title: "Timestamp",
-                        value: formatDate(Number(log?.timestamp) * 1000) || '__'
-                    },
+                log?.id ?
+                    <div className='hover:shadow-xl hover:cursor-pointer' onClick={
+                        () => {
+                            router.push("/case-detail/" + log.caseId)
+                        }
+                    }>
+                        <InfoBox title="Log" data={[
+                            {
+                                title: "ID",
+                                value: log.id
+                            },
+                            {
+                                title: "Source",
+                                value: log.source
+                            },
+                            {
+                                title: "Log type",
+                                value: LogType[log.logType]
+                            },
+                            {
+                                title: "Security level",
+                                value: SecurityLevel[log.securityLevel]
+                            },
+                            {
+                                title: "Status",
+                                value: Status[log.status]
+                            },
+                            {
+                                title: "Case",
+                                value: log.caseId,
+                            },
+                            {
+                                title: "Timestamp",
+                                value: formatDate(Number(log?.timestamp) * 1000) || '__'
+                            },
 
 
 
-                ]} className=" w-full" ></InfoBox> : ""
+                        ]} className=" w-full" ></InfoBox>
+                    </div>
+                    : ""
             }
             {
-                network?.id ? <InfoBox title="Network" data={[
-                    {
-                        title: "ID",
-                        value: network.id
-                    },
-                    {
-                        title: "Source Ip",
-                        value: network.sourceIp
-                    },
-                    {
-                        title: "Source port",
-                        value: network.sourcePort
-                    },
-                    {
-                        title: "Destination Ip",
-                        value: network.destIp
-                    },
-                    {
-                        title: "Destination port",
-                        value: network.destPort
-                    },
-                    {
-                        title: "Protocol",
-                        value: network.protocol
-                    },
-                    {
-                        title: "Datasize",
-                        value: network.dataSize
-                    },
-                    {
-                        title: "Status",
-                        value: Status[network.status]
-                    },
-                    {
-                        title: "Case",
-                        value: network.caseId,
-                    },
-                    {
-                        title: "Timestamp",
-                        value: formatDate(Number(network?.timestamp) * 1000) || '__'
-                    },
+                network?.id ?
+                    <div className='hover:shadow-xl hover:cursor-pointer' onClick={
+                        () => {
+                            router.push("/case-detail/" + network.caseId)
+                        }
+                    }>
+                        <InfoBox title="Network" data={[
+                            {
+                                title: "ID",
+                                value: network.id
+                            },
+                            {
+                                title: "Source Ip",
+                                value: network.sourceIp
+                            },
+                            {
+                                title: "Source port",
+                                value: network.sourcePort
+                            },
+                            {
+                                title: "Destination Ip",
+                                value: network.destIp
+                            },
+                            {
+                                title: "Destination port",
+                                value: network.destPort
+                            },
+                            {
+                                title: "Protocol",
+                                value: network.protocol
+                            },
+                            {
+                                title: "Datasize",
+                                value: network.dataSize
+                            },
+                            {
+                                title: "Status",
+                                value: Status[network.status]
+                            },
+                            {
+                                title: "Case",
+                                value: network.caseId,
+                            },
+                            {
+                                title: "Timestamp",
+                                value: formatDate(Number(network?.timestamp) * 1000) || '__'
+                            },
 
 
 
-                ]} className=" w-full" ></InfoBox> : ""
+                        ]} className=" w-full" ></InfoBox>
+                    </div>
+                    : ""
             }
         </div>
     )
