@@ -3,8 +3,8 @@ import NavBar from "@/components/layout/nav-bar";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { Suspense } from "react";
+import "./globals.css";
 
 
 const geistSans = Geist({
@@ -32,7 +32,6 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
         <AppContextProvider>
           <Suspense>
-
             <NavBar />
             <div className="container mx-auto p-4 mt-16">
               {children}
