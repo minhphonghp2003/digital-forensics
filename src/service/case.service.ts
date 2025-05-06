@@ -6,7 +6,7 @@ export let createCase = async ({ contract, title, description }: any) => {
 };
 // done
 export let getCaseById = async ({ contract, caseId }: any) => {
-    return await contract.getCase(caseId);
+    return await contract.casesMap(caseId);
 };
 // done
 export let getCaseLogIds = async ({ contract, caseId }: any) => {

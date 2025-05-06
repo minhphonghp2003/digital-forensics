@@ -36,8 +36,8 @@ function BasicInfo({ user, account, cases }: { cases: Case[] | null, user: Inves
             ]} className=" w-full" ></InfoBox>
             <InfoBox title="Latest case" data={[{
                 title: "ID",
-                value: truncateFromMiddle(latestCase?.id.toString(),) || "N/A",
-                copyText: latestCase?.id.toString() || "N/A"
+                value: truncateFromMiddle(latestCase?.id?.toString(),) || "N/A",
+                copyText: latestCase?.id?.toString() || "N/A"
             },
             {
                 title: "Title",
