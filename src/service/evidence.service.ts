@@ -55,24 +55,7 @@ export let getDevice = async ({ contract, deviceId }: any) => {
 export let getHardware = async ({ contract, hardwareId }: any) => {
     return await contract.hardwaresMap(hardwareId);
 };
-export let updateLog = async ({
-    contract,
-    caseId,
-    logId,
-    source,
-    securityLevel,
-    logType,
-}: any) => {
-    const tx = await contract.updateLog(
-        caseId,
-        logId,
-        source,
-        securityLevel,
-        logType
-    );
-    await tx.wait();
-    return tx;
-};
+
 
 // Update Log Status
 export let updateLogStatus = async ({
@@ -85,30 +68,7 @@ export let updateLogStatus = async ({
     await tx.wait();
     return tx;
 };
-export let updateNetwork = async ({
-    contract,
-    caseId,
-    networkId,
-    sourceIp,
-    destIp,
-    sourcePort,
-    destPort,
-    protocol,
-    dataSize,
-}: any) => {
-    const tx = await contract.updateNetwork(
-        caseId,
-        networkId,
-        sourceIp,
-        destIp,
-        sourcePort,
-        destPort,
-        protocol,
-        dataSize
-    );
-    await tx.wait();
-    return tx;
-};
+
 
 // Update Network Status
 export let updateNetworkStatus = async ({
@@ -121,33 +81,6 @@ export let updateNetworkStatus = async ({
     await tx.wait();
     return tx;
 };
-export let updateDevice = async ({
-    contract,
-    caseId,
-    deviceId,
-    name,
-    deviceType,
-    os,
-    osVersion,
-    mac,
-    ip,
-    lastBootTime,
-}: any) => {
-    const tx = await contract.updateDevice(
-        caseId,
-        deviceId,
-        name,
-        deviceType,
-        os,
-        osVersion,
-        mac,
-        ip,
-        lastBootTime
-    );
-    await tx.wait();
-    return tx;
-};
-
 // Update Device Status
 export let updateDeviceStatus = async ({
     contract,
@@ -159,36 +92,7 @@ export let updateDeviceStatus = async ({
     await tx.wait();
     return tx;
 };
-export let updateHardware = async ({
-    contract,
-    caseId,
-    hardwareId,
-    fileName,
-    fileType,
-    fileSize,
-    hash,
-    createdDate,
-    modifiedDate,
-    accessDate,
-    diskType,
-    filePath,
-}: any) => {
-    const tx = await contract.updateHardware(
-        caseId,
-        hardwareId,
-        fileName,
-        fileType,
-        fileSize,
-        hash,
-        createdDate,
-        modifiedDate,
-        accessDate,
-        diskType,
-        filePath
-    );
-    await tx.wait();
-    return tx;
-};
+
 
 // Update Hardware Status
 export let updateHardwareStatus = async ({

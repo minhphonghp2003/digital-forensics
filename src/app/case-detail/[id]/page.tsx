@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AccountContext } from '@/core/context/account.context';
-import { getCase, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCase, updateCaseStatus } from '@/service/case.service';
+import {  getCaseById, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCaseStatus } from '@/service/case.service';
 import { Status } from '@/utils/enum';
 import { truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
@@ -33,7 +33,7 @@ function page() {
     let fetchCase = async () => {
 
         if (account) {
-            let result: any = await getCase({ contract: account.contract, caseId: id });
+            let result: any = await getCaseById({ contract: account.contract, caseId: id });
             if (result) {
                 setCase(result)
                 setTitle(result.title)
@@ -85,30 +85,30 @@ function page() {
         });
 
     }, [account, id])
-    async function handleUpdateCase() {
-        if (account) {
+    // async function handleUpdateCase() {
+    //     if (account) {
 
-            try {
+    //         try {
 
-                let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
-                if (tx) {
-                    setOpen(false)
-                    fetchCase()
-                } else {
-                    setOpen(false)
-                    toast("Error", {
-                        description: "Error occur while calling contract"
-                    })
-                }
-            } catch (error) {
-                setOpen(false)
-                toast("Error", {
-                    description: "Error occur while calling contract"
-                })
-            }
+    //             let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
+    //             if (tx) {
+    //                 setOpen(false)
+    //                 fetchCase()
+    //             } else {
+    //                 setOpen(false)
+    //                 toast("Error", {
+    //                     description: "Error occur while calling contract"
+    //                 })
+    //             }
+    //         } catch (error) {
+    //             setOpen(false)
+    //             toast("Error", {
+    //                 description: "Error occur while calling contract"
+    //             })
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
     let status = Status[caseDetail?.status ?? 0]
     async function handleUpdateStatus() {
@@ -147,9 +147,9 @@ function page() {
                                 <Input id="username" value={description} onChange={(e) => { setDescription(e.target.value) }} className="col-span-3" />
                             </div>
                         </div>
-                        <DialogFooter>
+                        {/* <DialogFooter>
                             <Button onClick={handleUpdateCase} type="submit">Submit</Button>
-                        </DialogFooter>
+                        </DialogFooter> */}
                     </DialogContent>
 
                 </Dialog>}

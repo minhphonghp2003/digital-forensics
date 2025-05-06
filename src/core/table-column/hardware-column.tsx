@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AccountContext } from "@/core/context/account.context"
 import { Hardware } from "@/core/model/edivence/hardware.model"
-import { updateHardware, updateHardwareStatus } from "@/service/evidence.service"
+import {  updateHardwareStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -81,26 +81,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                 hash: detail.hash
             })
 
-            async function handleUpdateHardware() {
-                try {
-
-                    let tx = await updateHardware({ contract: account.contract, hardwareId: detail.id, caseId: detail.caseId, ...newHardware })
-                    if (tx) {
-                        setOpen(false)
-                    } else {
-                        setOpen(false)
-                        toast("Error", {
-                            description: "Error occur while calling contract"
-                        })
-                    }
-                } catch (error) {
-                    setOpen(false)
-                    toast("Error", {
-                        description: "Error occur while calling contract"
-                    })
-                }
-
-            }
+           
 
             async function handleUpdateStatus(status: any) {
                 try {
@@ -213,10 +194,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
 
                                 }} />
                             </div>
-                            <DialogFooter>
-
-                                <Button onClick={handleUpdateHardware} type="submit">Submit</Button>
-                            </DialogFooter>
+                            
                         </DialogContent>
 
                     </Dialog>

@@ -5,8 +5,8 @@ export let createCase = async ({ contract, title, description }: any) => {
     return tx;
 };
 // done
-export let getCase = async ({ contract, caseId }: any) => {
-    return await contract.casesMap(caseId);
+export let getCaseById = async ({ contract, caseId }: any) => {
+    return await contract.getCase(caseId);
 };
 // done
 export let getCaseLogIds = async ({ contract, caseId }: any) => {
@@ -28,17 +28,6 @@ export let getCaseHardwareIds = async ({ contract, caseId }: any) => {
 };
 
 
-export let updateCase = async ({
-    contract,
-    caseId,
-    title,
-    description,
-}: any) => {
-    const tx = await contract.updateCase(caseId, title, description);
-    await tx.wait();
-    return tx;
-};
-
 // done
 export let updateCaseStatus = async ({
     contract,
@@ -56,7 +45,7 @@ export let getCasesByIds = async ({
 }: any) => {
     const cases = await Promise.all(
         caseIds.map(async (caseId: string) => {
-            return await getCase({ contract, caseId });
+            return await getCaseById({ contract, caseId });
         })
     );
     return cases;

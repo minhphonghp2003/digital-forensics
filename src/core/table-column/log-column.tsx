@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AccountContext } from "@/core/context/account.context"
 import { Log } from "@/core/model/edivence/log.model"
-import { updateLog, updateLogStatus } from "@/service/evidence.service"
+import {  updateLogStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -72,27 +72,7 @@ export const logColumns: ColumnDef<Log>[] = [
                 securityLevel: 0,
                 logType: 0,
             })
-            async function handleUpdateLog() {
-
-                try {
-
-                    let tx = await updateLog({ contract: account.contract, logId: detail.id, caseId: detail.caseId, ...newLog })
-                    if (tx) {
-                        setOpen(false)
-                    } else {
-                        setOpen(false)
-                        toast("Error", {
-                            description: "Error occur while calling contract"
-                        })
-                    }
-                } catch (error) {
-                    setOpen(false)
-                    toast("Error", {
-                        description: "Error occur while calling contract"
-                    })
-                }
-
-            }
+          
 
             async function handleUpdateStatus(status: any) {
                 try {
@@ -208,10 +188,7 @@ export const logColumns: ColumnDef<Log>[] = [
                                     </Select>
                                 </div>
                             </div>
-                            <DialogFooter>
-
-                                <Button onClick={handleUpdateLog} type="submit">Submit</Button>
-                            </DialogFooter>
+                          
                         </DialogContent>
 
                     </Dialog>

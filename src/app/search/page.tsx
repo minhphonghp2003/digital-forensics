@@ -8,7 +8,7 @@ import { Hardware } from '@/core/model/edivence/hardware.model'
 import { Log } from '@/core/model/edivence/log.model'
 import { Network } from '@/core/model/edivence/network.model'
 import { Investigator } from '@/core/model/investigator/investigator.model'
-import { getCase } from '@/service/case.service'
+import { getCaseById } from '@/service/case.service'
 import { getDevice, getHardware, getLog, getNetwork } from '@/service/evidence.service'
 import { getInvestigator } from '@/service/investigator.service'
 import { LogType, SecurityLevel, Status } from '@/utils/enum'
@@ -41,7 +41,7 @@ function SearchPage() {
             }
 
             try {
-                let caseDetail = await getCase({ contract: account.contract, caseId: search })
+                let caseDetail = await getCaseById({ contract: account.contract, caseId: search })
                 if (caseDetail) {
                     setCaseDetail(caseDetail)
                 }

@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import TextInput from "@/components/form/text-input"
 import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AccountContext } from "@/core/context/account.context"
 import { Network } from "@/core/model/edivence/network.model"
-import { updateNetwork, updateNetworkStatus } from "@/service/evidence.service"
+import { updateNetworkStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -80,26 +80,7 @@ export const networkColumns: ColumnDef<Network>[] = [
                 protocol: detail.protocol,
                 dataSize: detail.dataSize,
             })
-            async function handleUpdateNetwork() {
-
-                try {
-
-                    let tx = await updateNetwork({ contract: account.contract, networkId: detail.id, caseId: detail.caseId, ...newNetwork })
-                    if (tx) {
-                        setOpen(false)
-                    } else {
-                        setOpen(false)
-                        toast("Error", {
-                            description: "Error occur while calling contract"
-                        })
-                    }
-                } catch (error) {
-                    setOpen(false)
-                    toast("Error", {
-                        description: "Error occur while calling contract"
-                    })
-                }
-            }
+           
 
             async function handleUpdateStatus(status: any) {
                 try {
@@ -204,10 +185,6 @@ export const networkColumns: ColumnDef<Network>[] = [
                                     </div>
                                 </div>
                             </div>
-                            <DialogFooter>
-
-                                <Button onClick={handleUpdateNetwork} type="submit">Submit</Button>
-                            </DialogFooter>
                         </DialogContent>
 
                     </Dialog>

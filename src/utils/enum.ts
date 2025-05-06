@@ -17,3 +17,8 @@ export enum Status {
     DELETED,
     ACTIVE,
 }
+export enum SystemLogSeverity {
+    INFO,
+    WARNING,
+    CRITICAL
+}
