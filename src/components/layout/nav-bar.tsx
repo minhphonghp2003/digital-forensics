@@ -115,10 +115,16 @@ function NavBar() {
                                     <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem onClick={() => { setOpen(true) }}>
-                                            Profile
+                                            Nickname
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem >
+                                            Logout
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
+                                    <DropdownMenuItem >
+                                        System logs
+                                    </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </li>
