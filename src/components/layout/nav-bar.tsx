@@ -20,6 +20,12 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect, useState } from "react";
 
+declare global {
+    interface Window {
+        metamask?: any;
+    }
+}
+
 function NavBar() {
     const router = useRouter();
     const { account, setAccount } = useContext(AccountContext);
@@ -112,13 +118,9 @@ function NavBar() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56">
                                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
                                     <DropdownMenuGroup>
                                         <DropdownMenuItem onClick={() => { setOpen(true) }}>
                                             Nickname
-                                        </DropdownMenuItem>
-                                        <DropdownMenuItem >
-                                            Logout
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
