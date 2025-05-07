@@ -2,19 +2,18 @@
 import BasicCaseInfo from '@/app/case-detail/[id]/components/basic-info';
 import DetailTable from '@/app/case-detail/[id]/components/detail-table';
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AccountContext } from '@/core/context/account.context';
-import {  getCaseById, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCaseStatus } from '@/service/case.service';
+import { getCaseById, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCaseStatus } from '@/service/case.service';
 import { Status } from '@/utils/enum';
 import { truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
 import { useParams } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
 import { CiEdit } from 'react-icons/ci';
-import { toast } from 'sonner';
 
 function page() {
     const params = useParams<{ id: string }>()
@@ -85,30 +84,6 @@ function page() {
         });
 
     }, [account, id])
-    // async function handleUpdateCase() {
-    //     if (account) {
-
-    //         try {
-
-    //             let tx = await updateCase({ contract: account.contract, caseId: id, title, description })
-    //             if (tx) {
-    //                 setOpen(false)
-    //                 fetchCase()
-    //             } else {
-    //                 setOpen(false)
-    //                 toast("Error", {
-    //                     description: "Error occur while calling contract"
-    //                 })
-    //             }
-    //         } catch (error) {
-    //             setOpen(false)
-    //             toast("Error", {
-    //                 description: "Error occur while calling contract"
-    //             })
-    //         }
-
-    //     }
-    // }
 
     let status = Status[caseDetail?.status ?? 0]
     async function handleUpdateStatus() {
@@ -147,9 +122,6 @@ function page() {
                                 <Input id="username" value={description} onChange={(e) => { setDescription(e.target.value) }} className="col-span-3" />
                             </div>
                         </div>
-                        {/* <DialogFooter>
-                            <Button onClick={handleUpdateCase} type="submit">Submit</Button>
-                        </DialogFooter> */}
                     </DialogContent>
 
                 </Dialog>}
@@ -204,7 +176,7 @@ function page() {
                 </p>
             </div>
             <BasicCaseInfo caseDetail={caseDetail} hardware={hardware} device={device} network={network} log={log} />
-            <DetailTable investigator={caseDetail?.investigator} caseId={id} />
+            <DetailTable investigator={caseDetail?.investigator} caseId={id} account={account} />
         </div>
     )
 }

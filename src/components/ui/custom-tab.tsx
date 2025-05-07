@@ -6,12 +6,10 @@ import { Separator } from '@/components/ui/separator'
 import { Tab } from '@/core/model/application/tabs.model'
 import { useState } from 'react'
 
-function CustomTab({ tabs }: { tabs: Tab[] }) {
+function CustomTab({ tabs, onVerified }: { tabs: Tab[], onVerified: any }) {
     const [activeTab, setActiveTab] = useState(1)
     const [open, setOpen] = useState(false)
-    function handleVerify(): void {
-        throw new Error('Function not implemented.')
-    }
+    const [selectedFile, setFile] = useState<any>(null)
 
     return (
         <>
@@ -42,12 +40,13 @@ function CustomTab({ tabs }: { tabs: Tab[] }) {
                             </DialogHeader>
                             <div className='flex flex-col gap-2'>
                                 <FileInputForm title='Choose file' onChange={(e: any) => {
-
+                                    const selectedFile = e.target.files?.[0]; // Get first file
+                                    setFile(selectedFile)
                                 }} />
 
                             </div>
                             <DialogFooter>
-                                <Button onClick={handleVerify} type="submit">Submit</Button>
+                                <Button onClick={()=>{onVerified(selectedFile)}} type="submit">Submit</Button>
                             </DialogFooter>
                         </DialogContent>
 
