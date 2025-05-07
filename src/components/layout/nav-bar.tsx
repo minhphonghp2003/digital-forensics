@@ -122,7 +122,9 @@ function NavBar() {
                                         </DropdownMenuItem>
                                     </DropdownMenuGroup>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem >
+                                    <DropdownMenuItem onClick={()=>{
+                                        router.push("/logs")
+                                    }} >
                                         System logs
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>

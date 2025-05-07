@@ -18,3 +18,6 @@ export const truncateFromMiddle = (
 export const formatDate = (value: any) => {
     return new Date(value).toLocaleDateString("vi-VN") || "N/A"
 }
+export const formatTime = (value: any) => {
+    return new Date(value).toLocaleTimeString("vi-VN") || "N/A"
+}
