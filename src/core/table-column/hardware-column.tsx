@@ -6,7 +6,7 @@ import DatePickerInput from '@/components/form/date-picker-input'
 import TextInput from '@/components/form/text-input'
 import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -81,7 +81,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                 hash: detail.hash
             })
 
-           
+
 
             async function handleUpdateStatus(status: any) {
                 try {
@@ -101,7 +101,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                         description: "Error occur while calling contract"
                     })
                 }
-               
+
             }
 
             return (
@@ -134,27 +134,25 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                     <Dialog open={open} onOpenChange={setOpen} >
                         <DialogContent className="sm:max-w-[800px]">
                             <DialogHeader>
-                                <DialogTitle>Update hardware</DialogTitle>
-                                <DialogDescription>
-                                    Update hardware
-                                </DialogDescription>
+                                <DialogTitle>Hardware details</DialogTitle>
+
                             </DialogHeader>
                             <div className='flex flex-col gap-2'>
                                 <div className='flex gap-6'>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
+                                        <TextInput readonly  value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 fileName: e.target.value
                                             })
                                         }} />
-                                        <TextInput value={newHardware.fileSize} title={'File size'} onChange={(e: any) => {
+                                        <TextInput readonly value={newHardware.fileSize} title={'File size'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 fileSize: e.target.value
                                             })
                                         }} />
-                                        <DatePickerInput title={'Access date'} onDatePicked={(e: any) => {
+                                        <DatePickerInput readonly  title={'Access date'} onDatePicked={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 accessDate: Date.parse(e)
@@ -162,21 +160,21 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                                         }} selected={newHardware?.accessDate} />
                                     </div>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newHardware.fileType} title={'File type'} onChange={(e: any) => {
+                                        <TextInput readonly value={newHardware.fileType} title={'File type'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 fileType: e.target.value
                                             })
 
                                         }} />
-                                        <TextInput value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
+                                        <TextInput readonly value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 filePath: e.target.value
                                             })
 
                                         }} />
-                                        <TextInput value={newHardware.diskType} title={'Disk type'} onChange={(e: any) => {
+                                        <TextInput readonly value={newHardware.diskType} title={'Disk type'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 diskType: e.target.value
@@ -186,7 +184,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                                     </div>
                                 </div>
 
-                                <TextInput title={'Hash'} value={newHardware.hash} onChange={(e: any) => {
+                                <TextInput title={'Hash'} readonly value={newHardware.hash} onChange={(e: any) => {
                                     setNewHardware({
                                         ...newHardware,
                                         hash: e.target.value
@@ -194,7 +192,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
 
                                 }} />
                             </div>
-                            
+
                         </DialogContent>
 
                     </Dialog>

@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import TextInput from "@/components/form/text-input"
 import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -18,7 +18,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { AccountContext } from "@/core/context/account.context"
 import { Log } from "@/core/model/edivence/log.model"
-import {  updateLogStatus } from "@/service/evidence.service"
+import { updateLogStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -124,12 +124,10 @@ export const logColumns: ColumnDef<Log>[] = [
                     <Dialog open={open} onOpenChange={setOpen} >
                         <DialogContent className="sm:max-w-[800px]">
                             <DialogHeader>
-                                <DialogTitle>Update log</DialogTitle>
-                                <DialogDescription>
-                                    Update log
-                                </DialogDescription>
+                                <DialogTitle>Log detail</DialogTitle>
+                                
                             </DialogHeader>
-                            <TextInput value={newLog.source} title={'Source'} onChange={(e: any) => {
+                            <TextInput readonly value={newLog.source} title={'Source'} onChange={(e: any) => {
                                 setNewLog({
                                     ...newLog,
                                     source: e.target.value
@@ -141,7 +139,7 @@ export const logColumns: ColumnDef<Log>[] = [
                                     <Label htmlFor="name" className='mb-2'>
                                         Security level
                                     </Label>
-                                    <Select onValueChange={(e) => {
+                                    <Select  onValueChange={(e) => {
                                         setNewLog({
                                             ...newLog,
                                             securityLevel: e

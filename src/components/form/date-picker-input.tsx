@@ -12,7 +12,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
-function DatePickerInput({ title, onDatePicked, formatType, selected }: { title: string, selected: any, formatType?: any, onDatePicked: any }) {
+function DatePickerInput({ readonly, title, onDatePicked, formatType, selected }: { title: string, selected: any, formatType?: any, onDatePicked: any, readonly?: boolean }) {
 
     return (
         <div className="">
@@ -20,7 +20,7 @@ function DatePickerInput({ title, onDatePicked, formatType, selected }: { title:
             <Label htmlFor="name" className='mb-2'>
                 {title}
             </Label>
-            <Popover>
+            <Popover >
                 <PopoverTrigger asChild>
                     <Button
                         variant={"outline"}
@@ -33,14 +33,15 @@ function DatePickerInput({ title, onDatePicked, formatType, selected }: { title:
                         {selected && format(selected, formatType ?? "PPP")}
                     </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
+                {!readonly && <PopoverContent className="w-auto p-0">
                     <Calendar
+
                         mode="single"
                         selected={selected}
                         onSelect={onDatePicked}
                         initialFocus
                     />
-                </PopoverContent>
+                </PopoverContent>}
             </Popover>
         </div>
     )

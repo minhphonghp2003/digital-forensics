@@ -6,7 +6,7 @@ import DatePickerInput from "@/components/form/date-picker-input"
 import TextInput from "@/components/form/text-input"
 import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AccountContext } from "@/core/context/account.context"
 import { Device } from "@/core/model/edivence/device.model"
-import {  updateDeviceStatus } from "@/service/evidence.service"
+import { updateDeviceStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -130,28 +130,26 @@ export const deviceColumns: ColumnDef<Device>[] = [
 
                         <DialogContent className="sm:max-w-[800px]">
                             <DialogHeader>
-                                <DialogTitle>Add device</DialogTitle>
-                                <DialogDescription>
-                                    Add a new device to the system. Please fill in the details below.
-                                </DialogDescription>
+                                <DialogTitle>Device detail</DialogTitle>
+                                
                             </DialogHeader>
                             <div className='flex flex-col gap-2'>
                                 <div className='flex gap-6'>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newDevice.name} title={'Name'} onChange={(e: any) => {
+                                        <TextInput readonly value={newDevice.name} title={'Name'} onChange={(e: any) => {
                                             setNewDevice({
                                                 ...newDevice,
                                                 name: e.target.value
                                             })
                                         }} />
-                                        <TextInput value={newDevice.ip} title={'IP'} onChange={(e: any) => {
+                                        <TextInput readonly value={newDevice.ip} title={'IP'} onChange={(e: any) => {
                                             setNewDevice({
                                                 ...newDevice,
                                                 ip: e.target.value
                                             })
 
                                         }} />
-                                        <TextInput value={newDevice.os} title={'OS'} onChange={(e: any) => {
+                                        <TextInput readonly value={newDevice.os} title={'OS'} onChange={(e: any) => {
                                             setNewDevice({
                                                 ...newDevice,
                                                 os: e.target.value
@@ -160,20 +158,20 @@ export const deviceColumns: ColumnDef<Device>[] = [
                                         }} />
                                     </div>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newDevice.deviceType} title={'Type'} onChange={(e: any) => {
+                                        <TextInput readonly value={newDevice.deviceType} title={'Type'} onChange={(e: any) => {
                                             setNewDevice({
                                                 ...newDevice,
                                                 deviceType: e.target.value
                                             })
                                         }} />
-                                        <TextInput value={newDevice.mac} title={'MAC'} onChange={(e: any) => {
+                                        <TextInput readonly value={newDevice.mac} title={'MAC'} onChange={(e: any) => {
                                             setNewDevice({
                                                 ...newDevice,
                                                 mac: e.target.value
                                             })
 
                                         }} />
-                                        <TextInput value={newDevice.osVersion} title={'OS version'} onChange={(e: any) => {
+                                        <TextInput readonly value={newDevice.osVersion} title={'OS version'} onChange={(e: any) => {
                                             setNewDevice({
                                                 ...newDevice,
                                                 osVersion: e.target.value
@@ -182,7 +180,7 @@ export const deviceColumns: ColumnDef<Device>[] = [
                                         }} />
                                     </div>
                                 </div>
-                                <DatePickerInput title={'Last boot time'} onDatePicked={(e: any) => {
+                                <DatePickerInput readonly title={'Last boot time'} onDatePicked={(e: any) => {
                                     setNewDevice({
                                         ...newDevice,
                                         lastBootTime: Date.parse(e)

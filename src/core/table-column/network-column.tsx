@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import TextInput from "@/components/form/text-input"
 import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -132,28 +132,26 @@ export const networkColumns: ColumnDef<Network>[] = [
                     <Dialog open={open} onOpenChange={setOpen} >
                         <DialogContent className="sm:max-w-[800px]">
                             <DialogHeader>
-                                <DialogTitle>Update network</DialogTitle>
-                                <DialogDescription>
-                                    Update network
-                                </DialogDescription>
+                                <DialogTitle>Network details</DialogTitle>
+                               
                             </DialogHeader>
                             <div className='flex flex-col gap-2'>
                                 <div className='flex gap-6'>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newNetwork.sourceIp} title={'Source IP'} onChange={(e: any) => {
+                                        <TextInput readonly value={newNetwork.sourceIp} title={'Source IP'} onChange={(e: any) => {
                                             setNewNetwork({
                                                 ...newNetwork,
                                                 sourceIp: e.target.value
                                             })
                                         }} />
-                                        <TextInput value={newNetwork.destIp} title={'Destination IP'} onChange={(e: any) => {
+                                        <TextInput readonly value={newNetwork.destIp} title={'Destination IP'} onChange={(e: any) => {
                                             setNewNetwork({
                                                 ...newNetwork,
                                                 destIp: e.target.value
                                             })
 
                                         }} />
-                                        <TextInput value={newNetwork.protocol} title={'Protocol'} onChange={(e: any) => {
+                                        <TextInput readonly value={newNetwork.protocol} title={'Protocol'} onChange={(e: any) => {
                                             setNewNetwork({
                                                 ...newNetwork,
                                                 protocol: e.target.value
@@ -162,20 +160,20 @@ export const networkColumns: ColumnDef<Network>[] = [
                                         }} />
                                     </div>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newNetwork.sourcePort} title={'Source port'} onChange={(e: any) => {
+                                        <TextInput readonly value={newNetwork.sourcePort} title={'Source port'} onChange={(e: any) => {
                                             setNewNetwork({
                                                 ...newNetwork,
                                                 sourcePort: e.target.value
                                             })
                                         }} />
-                                        <TextInput value={newNetwork.destPort} title={'Destination port'} onChange={(e: any) => {
+                                        <TextInput readonly value={newNetwork.destPort} title={'Destination port'} onChange={(e: any) => {
                                             setNewNetwork({
                                                 ...newNetwork,
                                                 destPort: e.target.value
                                             })
 
                                         }} />
-                                        <TextInput value={newNetwork.dataSize} title={'Data size'} onChange={(e: any) => {
+                                        <TextInput readonly value={newNetwork.dataSize} title={'Data size'} onChange={(e: any) => {
                                             setNewNetwork({
                                                 ...newNetwork,
                                                 dataSize: e.target.value
