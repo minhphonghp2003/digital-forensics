@@ -6,7 +6,7 @@ import DatePickerInput from '@/components/form/date-picker-input'
 import TextInput from '@/components/form/text-input'
 import UpdateStatusDialog from "@/components/form/update-status"
 import { DataTableColumnHeader } from "@/components/table-elements/column-header"
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { AccountContext } from "@/core/context/account.context"
 import { Hardware } from "@/core/model/edivence/hardware.model"
-import {  updateHardwareStatus } from "@/service/evidence.service"
+import { updateHardwareStatus } from "@/service/evidence.service"
 import { Button } from "components/ui/button"
 import { MoreHorizontal } from "lucide-react"
 import { useContext, useState } from "react"
@@ -37,11 +37,11 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
         header: ({ column }) => DataTableColumnHeader({ column, title: "File type" }),
 
     },
-    {
-        accessorKey: "hash",
-        header: ({ column }) => DataTableColumnHeader({ column, title: "Hash" }),
+    // {
+    //     accessorKey: "hash",
+    //     header: ({ column }) => DataTableColumnHeader({ column, title: "Hash" }),
 
-    },
+    // },
     {
         accessorKey: "formatedAccessDate",
         header: ({ column }) => DataTableColumnHeader({ column, title: "Access date" }),
