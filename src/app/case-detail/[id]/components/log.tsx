@@ -43,7 +43,9 @@ function LogDetail({ caseId, investigator }: { caseId: any, investigator: any })
             evidenceType == "Log" && caseId == caseId && fetchDetail()
         });
     }, [account])
-    async function handleAddLog() {
+    async function handleAddLog(e: any) {
+
+        e.preventDefault();
         try {
 
             let tx = await createLog({ contract: account.contract, caseId: caseId, ...newLog })
@@ -88,69 +90,71 @@ function LogDetail({ caseId, investigator }: { caseId: any, investigator: any })
                                 Add a new log to the system. Please fill in the details below.
                             </DialogDescription>
                         </DialogHeader>
-                        <TextInput title={'Source'} onChange={(e: any) => {
-                            setNewLog({
-                                ...newLog,
-                                source: e.target.value
-                            })
-                        }} />
-                        <div className='flex  gap-2'>
+                        <form onSubmit={handleAddLog}>
+                            <TextInput required title={'Source'} onChange={(e: any) => {
+                                setNewLog({
+                                    ...newLog,
+                                    source: e.target.value
+                                })
+                            }} />
+                            <div className='flex  gap-2 my-2'>
 
-                            <div className='grow flex flex-col gap-2'>
-                                <Label htmlFor="name" className='mb-2'>
-                                    Security level
-                                </Label>
-                                <Select onValueChange={(e) => {
-                                    setNewLog({
-                                        ...newLog,
-                                        securityLevel: e
-                                    })
-                                }} >
-                                    <div className='flex justify-between'>
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Select level" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectItem value="0">LOW</SelectItem>
-                                                <SelectItem value="1">MEDIUM</SelectItem>
-                                                <SelectItem value="2">HIGH</SelectItem>
-                                                <SelectItem value="3">CRITICAL</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </div>
-                                </Select>
+                                <div className='grow flex flex-col gap-2'>
+                                    <Label htmlFor="name" className='mb-2'>
+                                        Security level
+                                    </Label>
+                                    <Select onValueChange={(e) => {
+                                        setNewLog({
+                                            ...newLog,
+                                            securityLevel: e
+                                        })
+                                    }} >
+                                        <div className='flex justify-between'>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select level" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="0">LOW</SelectItem>
+                                                    <SelectItem value="1">MEDIUM</SelectItem>
+                                                    <SelectItem value="2">HIGH</SelectItem>
+                                                    <SelectItem value="3">CRITICAL</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </div>
+                                    </Select>
+                                </div>
+                                <div className='grow flex flex-col gap-2'>
+                                    <Label htmlFor="name" className='mb-2'>
+                                        Log type
+                                    </Label>
+                                    <Select onValueChange={(e) => {
+                                        setNewLog({
+                                            ...newLog,
+                                            logType: e
+                                        })
+                                    }} >
+                                        <div className='flex justify-between'>
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Select type" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectItem value="0">SYSTEM</SelectItem>
+                                                    <SelectItem value="1">SECURITY</SelectItem>
+                                                    <SelectItem value="2">APPLICATION</SelectItem>
+                                                    <SelectItem value="3">NETWORK</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </div>
+                                    </Select>
+                                </div>
                             </div>
-                            <div className='grow flex flex-col gap-2'>
-                                <Label htmlFor="name" className='mb-2'>
-                                    Log type
-                                </Label>
-                                <Select onValueChange={(e) => {
-                                    setNewLog({
-                                        ...newLog,
-                                        logType: e
-                                    })
-                                }} >
-                                    <div className='flex justify-between'>
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Select type" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectItem value="0">SYSTEM</SelectItem>
-                                                <SelectItem value="1">SECURITY</SelectItem>
-                                                <SelectItem value="2">APPLICATION</SelectItem>
-                                                <SelectItem value="3">NETWORK</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </div>
-                                </Select>
-                            </div>
-                        </div>
-                        <DialogFooter>
+                            <DialogFooter>
 
-                            <Button onClick={handleAddLog} type="submit">Submit</Button>
-                        </DialogFooter>
+                                <Button type="submit">Submit</Button>
+                            </DialogFooter>
+                        </form>
                     </DialogContent>
 
                 </Dialog>

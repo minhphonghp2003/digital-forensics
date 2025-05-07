@@ -51,7 +51,8 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
             evidenceType == "Device" && caseId == caseId && fetchDetail()
         });
     }, [account])
-    async function handleAddDevice() {
+    async function handleAddDevice(e:any) {
+        e.preventDefault(); 
         try {
 
             let tx = await createDevice({ contract: account.contract, caseId: caseId, ...newDevice })
@@ -102,10 +103,12 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
                                 Add a new device to the system. Please fill in the details below.
                             </DialogDescription>
                         </DialogHeader>
-                        <div className='flex flex-col gap-2'>
+                        <form onSubmit={handleAddDevice}>
+
+                        <div className='flex flex-col gap-2 mb-2'>
                             <div className='flex gap-6'>
                                 <div className='grow flex flex-col gap-2'>
-                                    <TextInput title={'Name'} onChange={(e: any) => {
+                                    <TextInput required title={'Name'} onChange={(e: any) => {
                                         setNewDevice({
                                             ...newDevice,
                                             name: e.target.value
@@ -127,7 +130,7 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
                                     }} />
                                 </div>
                                 <div className='grow flex flex-col gap-2'>
-                                    <TextInput title={'Type'} onChange={(e: any) => {
+                                    <TextInput required title={'Type'} onChange={(e: any) => {
                                         setNewDevice({
                                             ...newDevice,
                                             deviceType: e.target.value
@@ -159,8 +162,10 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
                         </div>
                         <DialogFooter>
 
-                            <Button onClick={handleAddDevice} type="submit">Submit</Button>
+                            <Button   type="submit">Submit</Button>
                         </DialogFooter>
+
+                        </form>
                     </DialogContent>
 
                 </Dialog>

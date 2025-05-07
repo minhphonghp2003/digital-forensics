@@ -46,7 +46,9 @@ function NetworkDetail({ caseId, investigator }: { caseId: any, investigator: an
             evidenceType == "Network" && caseId == caseId && fetchDetail()
         });
     }, [account])
-    async function handleAddNetwork() {
+    async function handleAddNetwork(e: any) {
+
+        e.preventDefault();
         try {
 
             let tx = await createNetwork({ contract: account.contract, caseId: caseId, ...newNetwork })
@@ -94,58 +96,62 @@ function NetworkDetail({ caseId, investigator }: { caseId: any, investigator: an
                                 Add a new network to the system. Please fill in the details below.
                             </DialogDescription>
                         </DialogHeader>
-                        <div className='flex flex-col gap-2'>
-                            <div className='flex gap-6'>
-                                <div className='grow flex flex-col gap-2'>
-                                    <TextInput title={'Source IP'} onChange={(e: any) => {
-                                        setNewNetwork({
-                                            ...newNetwork,
-                                            sourceIp: e.target.value
-                                        })
-                                    }} />
-                                    <TextInput title={'Destination IP'} onChange={(e: any) => {
-                                        setNewNetwork({
-                                            ...newNetwork,
-                                            destIp: e.target.value
-                                        })
+                        <form onSubmit={handleAddNetwork}>
 
-                                    }} />
-                                    <TextInput title={'Protocol'} onChange={(e: any) => {
-                                        setNewNetwork({
-                                            ...newNetwork,
-                                            protocol: e.target.value
-                                        })
 
-                                    }} />
-                                </div>
-                                <div className='grow flex flex-col gap-2'>
-                                    <TextInput title={'Source port'} onChange={(e: any) => {
-                                        setNewNetwork({
-                                            ...newNetwork,
-                                            sourcePort: e.target.value
-                                        })
-                                    }} />
-                                    <TextInput title={'Destination port'} onChange={(e: any) => {
-                                        setNewNetwork({
-                                            ...newNetwork,
-                                            destPort: e.target.value
-                                        })
+                            <div className='flex flex-col gap-2 mb-2'>
+                                <div className='flex gap-6'>
+                                    <div className='grow flex flex-col gap-2'>
+                                        <TextInput required title={'Source IP'} onChange={(e: any) => {
+                                            setNewNetwork({
+                                                ...newNetwork,
+                                                sourceIp: e.target.value
+                                            })
+                                        }} />
+                                        <TextInput required title={'Destination IP'} onChange={(e: any) => {
+                                            setNewNetwork({
+                                                ...newNetwork,
+                                                destIp: e.target.value
+                                            })
 
-                                    }} />
-                                    <TextInput title={'Data size'} onChange={(e: any) => {
-                                        setNewNetwork({
-                                            ...newNetwork,
-                                            dataSize: e.target.value
-                                        })
+                                        }} />
+                                        <TextInput required title={'Protocol'} onChange={(e: any) => {
+                                            setNewNetwork({
+                                                ...newNetwork,
+                                                protocol: e.target.value
+                                            })
 
-                                    }} />
+                                        }} />
+                                    </div>
+                                    <div className='grow flex flex-col gap-2'>
+                                        <TextInput required title={'Source port'} onChange={(e: any) => {
+                                            setNewNetwork({
+                                                ...newNetwork,
+                                                sourcePort: e.target.value
+                                            })
+                                        }} />
+                                        <TextInput required title={'Destination port'} onChange={(e: any) => {
+                                            setNewNetwork({
+                                                ...newNetwork,
+                                                destPort: e.target.value
+                                            })
+
+                                        }} />
+                                        <TextInput required title={'Data size'} onChange={(e: any) => {
+                                            setNewNetwork({
+                                                ...newNetwork,
+                                                dataSize: e.target.value
+                                            })
+
+                                        }} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <DialogFooter>
+                            <DialogFooter>
 
-                            <Button onClick={handleAddNetwork} type="submit">Submit</Button>
-                        </DialogFooter>
+                                <Button type="submit">Submit</Button>
+                            </DialogFooter>
+                        </form>
                     </DialogContent>
 
                 </Dialog>

@@ -1,13 +1,15 @@
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
-function TextInput({ title, onChange, value }: { title: string, onChange: any, value?: any }) {
+function TextInput({ required, title, onChange, value }: { title: string, onChange: any, value?: any, required?: boolean }) {
     return (
         <div className=" ">
             <Label htmlFor="name" className='mb-2'>
                 {title}
+                {
+                    required && <span className="text-red-500">*</span>}
             </Label>
-            <Input onChange={onChange} value={value} className='col-span-3' />
+            <Input required={required} onChange={onChange} value={value} className='col-span-3' />
         </div>
     )
 }

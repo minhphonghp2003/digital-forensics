@@ -27,9 +27,9 @@ function AllCase({ cases, userAddress }: { userAddress: any, cases?: Case[] | nu
             createdDate: formatDate(Number(item.createdDate) * 1000),
         }
     })
-    let handleAddCase = async () => {
+    let handleAddCase = async (e: any) => {
         // Handle add case logic here
-
+        e.preventDefault();
         if (!account) return;
         let tx = await createCase({
             contract: account.contract,
@@ -58,23 +58,28 @@ function AllCase({ cases, userAddress }: { userAddress: any, cases?: Case[] | nu
                                     Add a new case to the system. Please fill in the details below.
                                 </DialogDescription>
                             </DialogHeader>
-                            <div className="grid gap-4 py-4">
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label htmlFor="name" className="text-right">
-                                        Title
-                                    </Label>
-                                    <Input id="name" value={title} onChange={(e) => { setTitle(e.target.value) }} className="col-span-3" />
+                            <form onSubmit={handleAddCase}>
+
+                                <div className="grid gap-4 py-4">
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="name" className="text-right">
+                                            Title
+                                            <span className="text-red-500">*</span>
+                                        </Label>
+                                        <Input id="name" required value={title} onChange={(e) => { setTitle(e.target.value) }} className="col-span-3" />
+                                    </div>
+                                    <div className="grid grid-cols-4 items-center gap-4">
+                                        <Label htmlFor="username" className="text-right">
+                                            Description
+                                            <span className="text-red-500">*</span>
+                                        </Label>
+                                        <Input id="username" required value={description} onChange={(e) => { setDescription(e.target.value) }} className="col-span-3" />
+                                    </div>
                                 </div>
-                                <div className="grid grid-cols-4 items-center gap-4">
-                                    <Label htmlFor="username" className="text-right">
-                                        Description
-                                    </Label>
-                                    <Input id="username" value={description} onChange={(e) => { setDescription(e.target.value) }} className="col-span-3" />
-                                </div>
-                            </div>
-                            <DialogFooter>
-                                <Button onClick={handleAddCase} type="submit">Submit</Button>
-                            </DialogFooter>
+                                <DialogFooter>
+                                    <Button type="submit">Submit</Button>
+                                </DialogFooter>
+                            </form>
                         </DialogContent>
 
                     </Dialog>
