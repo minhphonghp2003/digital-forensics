@@ -10,15 +10,18 @@ import { hardwareColumns } from '@/core/table-column/hardware-column'
 import { getCaseHardwareIds } from '@/service/case.service'
 import { createHardware, getHardware } from '@/service/evidence.service'
 import { Status } from '@/utils/enum'
-import { formatDate, hashFile } from '@/utils/helper'
+import { formatDate, hashFile, uploadFileToCloud } from '@/utils/helper'
 import { Button } from 'components/ui/button'
+import { Upload } from 'lucide-react'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
+
 function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: any }) {
 
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
     let [hardware, setHardware] = useState<Hardware[] | null>(null)
+    let [uploadedFile, setUploadFile] = useState<any>(null)
     let [newHardware, setNewHardware] = useState<{
         fileName: string,
         fileType: string,
@@ -54,10 +57,27 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
         setNewHardware({
             ...newHardware,
             fileName: file.name,
-            modifiedDate: file.lastModified,
-            fileSize: file.size,
+            accessDate: file.lastModified,
+            fileSize: file.size ,
             fileType: file.type,
-            hash:await hashFile(file)
+            hash: await hashFile(file)
+        })
+        setUploadFile(file)
+    }
+    let handlePushFile = async () => {
+        let path = await uploadFileToCloud(uploadedFile)
+        if (!path) {
+            toast("Error", {
+                description: "Error occur while uploading file"
+            })
+            return
+        }
+        setNewHardware({
+            ...newHardware,
+            filePath: path
+        })
+        toast("Success", {
+            description: "Uploading file successfully"
         })
     }
     useEffect(() => {
@@ -86,9 +106,8 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
                 description: "Error occur while calling contract"
             })
         }
-
-
     }
+
 
     return (
         <div className=''><CustomTable title="Hardware" columns={hardwareColumns} data={
@@ -144,7 +163,7 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
                                                 fileSize: e.target.value
                                             })
                                         }} />
-                                        <DatePickerInput  title={'Access date'} onDatePicked={(e: any) => {
+                                        <DatePickerInput title={'Access date'} onDatePicked={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 accessDate: Date.parse(e)
@@ -159,13 +178,24 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
                                             })
 
                                         }} />
-                                        <TextInput value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
-                                            setNewHardware({
-                                                ...newHardware,
-                                                filePath: e.target.value
-                                            })
+                                        <div className='flex gap-2 items-end '>
 
-                                        }} />
+                                            <TextInput value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
+                                                setNewHardware({
+                                                    ...newHardware,
+                                                    filePath: e.target.value
+                                                })
+
+                                            }} />
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                size="icon"
+                                                onClick={handlePushFile}
+                                            >
+                                                <Upload className="h-4 w-4" />
+                                            </Button>
+                                        </div>
                                         <TextInput value={newHardware.diskType} title={'Disk type'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,

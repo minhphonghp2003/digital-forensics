@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label'
 
 function TextInput({ required, title, onChange, value }: { title: string, onChange: any, value?: any, required?: boolean }) {
     return (
-        <div className=" ">
+        <div className=" grow">
             <Label htmlFor="name" className='mb-2'>
                 {title}
                 {
