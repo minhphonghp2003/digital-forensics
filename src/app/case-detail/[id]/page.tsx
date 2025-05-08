@@ -13,7 +13,6 @@ import { truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
 import { useParams } from 'next/navigation';
 import { useContext, useEffect, useState } from 'react';
-import { CiEdit } from 'react-icons/ci';
 
 function page() {
     const params = useParams<{ id: string }>()
@@ -162,7 +161,7 @@ function page() {
                     }}>
                         Case #{truncateFromMiddle(id)}{
 
-                            account?.address == caseDetail?.investigator && <CiEdit onClick={() => { setOpen(true) }} color='orange' className='cursor-pointer' />
+                            account?.address == caseDetail?.investigator 
                         }
                     </p>
                     <div>

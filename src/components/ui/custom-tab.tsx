@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator'
 import { Tab } from '@/core/model/application/tabs.model'
 import { useState } from 'react'
 
-function CustomTab({ tabs, onVerified }: { tabs: Tab[], onVerified: any }) {
+function CustomTab({ tabs, onVerified, onFileChange, children }: { tabs: Tab[], onVerified: any, children?: any, onFileChange?: any }) {
     const [activeTab, setActiveTab] = useState(1)
     const [open, setOpen] = useState(false)
     const [selectedFile, setFile] = useState<any>(null)
@@ -42,11 +42,13 @@ function CustomTab({ tabs, onVerified }: { tabs: Tab[], onVerified: any }) {
                                 <FileInputForm title='Choose file' onChange={(e: any) => {
                                     const selectedFile = e.target.files?.[0]; // Get first file
                                     setFile(selectedFile)
+                                    onFileChange()
                                 }} />
 
+                                {children}
                             </div>
                             <DialogFooter>
-                                <Button onClick={()=>{onVerified(selectedFile)}} type="submit">Submit</Button>
+                                <Button onClick={() => { onVerified(selectedFile) }} type="submit">Submit</Button>
                             </DialogFooter>
                         </DialogContent>
 
