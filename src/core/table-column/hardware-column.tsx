@@ -140,7 +140,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                             <div className='flex flex-col gap-2'>
                                 <div className='flex gap-6'>
                                     <div className='grow flex flex-col gap-2'>
-                                        <TextInput readonly  value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
+                                        <TextInput readonly value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 fileName: e.target.value
@@ -152,7 +152,7 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                                                 fileSize: e.target.value
                                             })
                                         }} />
-                                        <DatePickerInput readonly  title={'Access date'} onDatePicked={(e: any) => {
+                                        <DatePickerInput readonly title={'Access date'} onDatePicked={(e: any) => {
                                             setNewHardware({
                                                 ...newHardware,
                                                 accessDate: Date.parse(e)
@@ -183,7 +183,8 @@ export const hardwareColumns: ColumnDef<Hardware>[] = [
                                         }} />
                                     </div>
                                 </div>
-
+                                <TextInput title={'Description'} readonly value={detail.description} onChange={(e: any) => {
+                                }} />
                                 <TextInput title={'Hash'} readonly value={newHardware.hash} onChange={(e: any) => {
                                     setNewHardware({
                                         ...newHardware,

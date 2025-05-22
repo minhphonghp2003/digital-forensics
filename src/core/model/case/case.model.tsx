@@ -5,6 +5,5 @@ export interface Case {
     title: string;
     createdDate: number;
     description: string;
-    investigator: string; // address => string (Ethereum address)
     status: Status;
   }

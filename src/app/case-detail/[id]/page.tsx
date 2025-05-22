@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { AccountContext } from '@/core/context/account.context';
-import { getCaseById, getCaseDeviceIds, getCaseHardwareIds, getCaseLogIds, getCaseNetworkIds, updateCaseStatus } from '@/service/case.service';
+import { getCaseById, getCaseDeviceIds, getCaseHardwareIds, getCaseInvestigatorIds, getCaseLogIds, getCaseNetworkIds, updateCaseStatus } from '@/service/case.service';
 import { Status } from '@/utils/enum';
 import { truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
@@ -27,15 +27,18 @@ function page() {
     let [hardware, setHardware] = useState<any>(null)
     let [device, setDevice] = useState<any>(null)
     let [network, setNetwork] = useState<any>(null)
+    let [investigators, setInv] = useState<any>(null)
     let [log, setLog] = useState<any>(null)
     let fetchCase = async () => {
 
         if (account) {
             let result: any = await getCaseById({ contract: account.contract, caseId: id });
             if (result) {
+
                 setCase(result)
                 setTitle(result.title)
                 setDescription(result.description)
+                fetchInvs()
                 fetchHardware()
                 fetchDevice()
                 fetchNetwork()
@@ -48,6 +51,14 @@ function page() {
             let result = await getCaseHardwareIds({ contract: account.contract, caseId: id });
             if (result) {
                 setHardware(result)
+            }
+        }
+    }
+    let fetchInvs = async () => {
+        if (account && id) {
+            let result: [] = await getCaseInvestigatorIds({ contract: account.contract, caseId: id });
+            if (result) {
+                setInv(result)
             }
         }
     }
@@ -79,6 +90,9 @@ function page() {
     useEffect(() => {
         fetchCase()
         account && account.contract.on("EvidenceAdded", (caseId: any, evidenceType: any, evidenceId: any) => {
+            caseId == id && fetchCase()
+        });
+        account && account.contract.on("InvestigatorAdded", (caseId: any, evidenceType: any, evidenceId: any) => {
             caseId == id && fetchCase()
         });
 
@@ -161,7 +175,7 @@ function page() {
                     }}>
                         Case #{truncateFromMiddle(id)}{
 
-                            account?.address == caseDetail?.investigator 
+                            account?.address == caseDetail?.investigator
                         }
                     </p>
                     <div>
@@ -174,8 +188,8 @@ function page() {
                     </span>
                 </p>
             </div>
-            <BasicCaseInfo caseDetail={caseDetail} hardware={hardware} device={device} network={network} log={log} />
-            <DetailTable investigator={caseDetail?.investigator} caseId={id} account={account} />
+            <BasicCaseInfo caseDetail={caseDetail} investigators={investigators} hardware={hardware} device={device} network={network} log={log} />
+            <DetailTable investigator={investigators} caseId={id} account={account} />
         </div>
     )
 }

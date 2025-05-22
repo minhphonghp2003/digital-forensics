@@ -18,6 +18,7 @@ import { toast } from 'sonner'
 
 function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: any }) {
 
+
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
     let [hardware, setHardware] = useState<Hardware[] | null>(null)
@@ -25,6 +26,7 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
     let [newHardware, setNewHardware] = useState<{
         fileName: string,
         fileType: string,
+        description: string,
         fileSize: any,
         hash: string,
         createdDate: any,
@@ -36,6 +38,7 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
         accessDate: Date.now(),
         createdDate: Date.now(),
         modifiedDate: Date.now(),
+        description: "",
         diskType: "",
         filePath: "",
         fileName: "",
@@ -58,7 +61,7 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
             ...newHardware,
             fileName: file.name,
             accessDate: file.lastModified,
-            fileSize: file.size ,
+            fileSize: file.size,
             fileType: file.type,
             hash: await hashFile(file)
         })
@@ -110,121 +113,128 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
 
 
     return (
-        <div className=''><CustomTable title="Hardware" columns={hardwareColumns} data={
-            hardware?.map((e: Hardware) => {
-                return {
-                    id: e.id,
-                    fileName: e.fileName,
-                    fileType: e.fileType,
-                    fileSize: e.fileSize,
-                    hash: e.hash,
-                    accessDate: (Number(e.accessDate)),
-                    formatedAccessDate: formatDate((Number(e.accessDate))),
-                    status: Status[e.status],
-                    caseId: e.caseId,
-                    createdDate: (Number(e.createdDate)),
-                    modifiedDate: (Number(e.modifiedDate)),
-                    diskType: e.diskType,
-                    filePath: e.filePath,
-                }
-            })
+        <div className=''>
+            <CustomTable title="Hardware" columns={hardwareColumns} data={
+                hardware?.map((e: Hardware) => {
+                    return {
+                        id: e.id,
+                        fileName: e.fileName,
+                        fileType: e.fileType,
+                        fileSize: e.fileSize,
+                        hash: e.hash,
+                        accessDate: (Number(e.accessDate)),
+                        formatedAccessDate: formatDate((Number(e.accessDate))),
+                        status: Status[e.status],
+                        caseId: e.caseId,
+                        createdDate: (Number(e.createdDate)),
+                        modifiedDate: (Number(e.modifiedDate)),
+                        diskType: e.diskType,
+                        filePath: e.filePath,
+                    }
+                })
 
-        } searchKey={'id'}
-            extra={
-                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
-                    <DialogTrigger asChild>
-                        <Button variant="outline">Add hardware</Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[800px]">
-                        <DialogHeader>
-                            <DialogTitle>Add hardware</DialogTitle>
-                            <DialogDescription>
-                                Add a new hardwware to the system. Please fill in the details below.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <form onSubmit={handleAddHardware}>
-                            <div className='flex flex-col gap-2 mb-2'>
-                                <FileInputForm title='Choose file' onChange={(e: any) => {
-                                    const selectedFile = e.target.files?.[0]; // Get first file
-                                    handleFileUpload(selectedFile)
-                                }} />
+            } searchKey={'id'}
+                extra={
+                    investigator?.includes(account?.address) && <Dialog open={open} onOpenChange={setOpen} >
+                        <DialogTrigger asChild>
+                            <Button variant="outline">Add hardware</Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[800px]">
+                            <DialogHeader>
+                                <DialogTitle>Add hardware</DialogTitle>
+                                <DialogDescription>
+                                    Add a new hardwware to the system. Please fill in the details below.
+                                </DialogDescription>
+                            </DialogHeader>
+                            <form onSubmit={handleAddHardware}>
+                                <div className='flex flex-col gap-2 mb-2'>
+                                    <FileInputForm title='Choose file' onChange={(e: any) => {
+                                        const selectedFile = e.target.files?.[0]; // Get first file
+                                        handleFileUpload(selectedFile)
+                                    }} />
 
-                                <div className='flex gap-6'>
-                                    <div className='grow flex flex-col gap-2'>
-                                        <TextInput required value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
-                                            setNewHardware({
-                                                ...newHardware,
-                                                fileName: e.target.value
-                                            })
-                                        }} />
-                                        <TextInput required value={newHardware.fileSize} title={'File size'} onChange={(e: any) => {
-                                            setNewHardware({
-                                                ...newHardware,
-                                                fileSize: e.target.value
-                                            })
-                                        }} />
-                                        <DatePickerInput title={'Access date'} onDatePicked={(e: any) => {
-                                            setNewHardware({
-                                                ...newHardware,
-                                                accessDate: Date.parse(e)
-                                            })
-                                        }} selected={newHardware?.accessDate} />
-                                    </div>
-                                    <div className='grow flex flex-col gap-2'>
-                                        <TextInput value={newHardware.fileType} required title={'File type'} onChange={(e: any) => {
-                                            setNewHardware({
-                                                ...newHardware,
-                                                fileType: e.target.value
-                                            })
-
-                                        }} />
-                                        <div className='flex gap-2 items-end '>
-
-                                            <TextInput value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
+                                    <div className='flex gap-6'>
+                                        <div className='grow flex flex-col gap-2'>
+                                            <TextInput required value={newHardware.fileName} title={'File name'} onChange={(e: any) => {
                                                 setNewHardware({
                                                     ...newHardware,
-                                                    filePath: e.target.value
+                                                    fileName: e.target.value
+                                                })
+                                            }} />
+                                            <TextInput required value={newHardware.fileSize} title={'File size'} onChange={(e: any) => {
+                                                setNewHardware({
+                                                    ...newHardware,
+                                                    fileSize: e.target.value
+                                                })
+                                            }} />
+                                            <DatePickerInput title={'Access date'} onDatePicked={(e: any) => {
+                                                setNewHardware({
+                                                    ...newHardware,
+                                                    accessDate: Date.parse(e)
+                                                })
+                                            }} selected={newHardware?.accessDate} />
+                                        </div>
+                                        <div className='grow flex flex-col gap-2'>
+                                            <TextInput value={newHardware.fileType} required title={'File type'} onChange={(e: any) => {
+                                                setNewHardware({
+                                                    ...newHardware,
+                                                    fileType: e.target.value
                                                 })
 
                                             }} />
-                                            <Button
-                                                type="button"
-                                                variant="outline"
-                                                size="icon"
-                                                onClick={handlePushFile}
-                                            >
-                                                <Upload className="h-4 w-4" />
-                                            </Button>
+                                            <div className='flex gap-2 items-end '>
+
+                                                <TextInput value={newHardware.filePath} title={'File path'} onChange={(e: any) => {
+                                                    setNewHardware({
+                                                        ...newHardware,
+                                                        filePath: e.target.value
+                                                    })
+
+                                                }} />
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="icon"
+                                                    onClick={handlePushFile}
+                                                >
+                                                    <Upload className="h-4 w-4" />
+                                                </Button>
+                                            </div>
+                                            <TextInput value={newHardware.diskType} title={'Disk type'} onChange={(e: any) => {
+                                                setNewHardware({
+                                                    ...newHardware,
+                                                    diskType: e.target.value
+                                                })
+
+                                            }} />
                                         </div>
-                                        <TextInput value={newHardware.diskType} title={'Disk type'} onChange={(e: any) => {
-                                            setNewHardware({
-                                                ...newHardware,
-                                                diskType: e.target.value
-                                            })
-
-                                        }} />
                                     </div>
+
+                                    <TextInput value={newHardware.description} title={'Description'} onChange={(e: any) => {
+                                        setNewHardware({
+                                            ...newHardware,
+                                            description: e.target.value
+                                        })
+
+                                    }} />
+                                    <TextInput required value={newHardware.hash} title={'Hash'} onChange={(e: any) => {
+                                        setNewHardware({
+                                            ...newHardware,
+                                            hash: e.target.value
+                                        })
+
+                                    }} />
                                 </div>
+                                <DialogFooter>
 
+                                    <Button type="submit">Submit</Button>
+                                </DialogFooter>
+                            </form>
+                        </DialogContent>
 
-                                <TextInput required value={newHardware.hash} title={'Hash'} onChange={(e: any) => {
-                                    setNewHardware({
-                                        ...newHardware,
-                                        hash: e.target.value
-                                    })
-
-                                }} />
-                            </div>
-                            <DialogFooter>
-
-                                <Button type="submit">Submit</Button>
-                            </DialogFooter>
-                        </form>
-                    </DialogContent>
-
-                </Dialog>
-            }
-        /></div>
+                    </Dialog>
+                }
+            /></div>
     )
 }
 

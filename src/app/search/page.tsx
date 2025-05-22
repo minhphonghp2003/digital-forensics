@@ -162,11 +162,7 @@ function SearchPage() {
                             title: "Status",
                             value: Status[caseDetail.status]
                         },
-                        {
-                            title: "Investigator",
-                            value: (caseDetail?.investigator) || '__',
-                            copyText: caseDetail?.investigator
-                        },
+                        
                         {
                             title: "Created at",
                             value: formatDate(Number(caseDetail?.createdDate) * 1000) || '__'

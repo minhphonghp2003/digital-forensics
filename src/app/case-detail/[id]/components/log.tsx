@@ -79,7 +79,7 @@ function LogDetail({ caseId, investigator }: { caseId: any, investigator: any })
             }
         })} searchKey={'id'}
             extra={
-                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
+                investigator?.includes(account?.address) && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add log</Button>
                     </DialogTrigger>

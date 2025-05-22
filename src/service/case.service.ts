@@ -16,7 +16,9 @@ export let getCaseLogIds = async ({ contract, caseId }: any) => {
 export let getCaseDeviceIds = async ({ contract, caseId }: any) => {
     return await contract.getCaseDeviceIds(caseId);
 };
-
+export let getCaseInvestigatorIds = async ({ contract, caseId }: any) => {
+    return await contract.getCaseInvestigators(caseId);
+};
 // done
 export let getCaseNetworkIds = async ({ contract, caseId }: any) => {
     return await contract.getCaseNetworkIds(caseId);

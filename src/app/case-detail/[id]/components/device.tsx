@@ -51,8 +51,8 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
             evidenceType == "Device" && caseId == caseId && fetchDetail()
         });
     }, [account])
-    async function handleAddDevice(e:any) {
-        e.preventDefault(); 
+    async function handleAddDevice(e: any) {
+        e.preventDefault();
         try {
 
             let tx = await createDevice({ contract: account.contract, caseId: caseId, ...newDevice })
@@ -92,7 +92,7 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
             }
         })} searchKey={'id'}
             extra={
-                account?.address == investigator && <Dialog open={open} onOpenChange={setOpen} >
+                investigator?.includes(account?.address) && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add device</Button>
                     </DialogTrigger>
@@ -105,65 +105,65 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
                         </DialogHeader>
                         <form onSubmit={handleAddDevice}>
 
-                        <div className='flex flex-col gap-2 mb-2'>
-                            <div className='flex gap-6'>
-                                <div className='grow flex flex-col gap-2'>
-                                    <TextInput required title={'Name'} onChange={(e: any) => {
-                                        setNewDevice({
-                                            ...newDevice,
-                                            name: e.target.value
-                                        })
-                                    }} />
-                                    <TextInput title={'IP'} onChange={(e: any) => {
-                                        setNewDevice({
-                                            ...newDevice,
-                                            ip: e.target.value
-                                        })
+                            <div className='flex flex-col gap-2 mb-2'>
+                                <div className='flex gap-6'>
+                                    <div className='grow flex flex-col gap-2'>
+                                        <TextInput required title={'Name'} onChange={(e: any) => {
+                                            setNewDevice({
+                                                ...newDevice,
+                                                name: e.target.value
+                                            })
+                                        }} />
+                                        <TextInput title={'IP'} onChange={(e: any) => {
+                                            setNewDevice({
+                                                ...newDevice,
+                                                ip: e.target.value
+                                            })
 
-                                    }} />
-                                    <TextInput title={'OS'} onChange={(e: any) => {
-                                        setNewDevice({
-                                            ...newDevice,
-                                            os: e.target.value
-                                        })
+                                        }} />
+                                        <TextInput title={'OS'} onChange={(e: any) => {
+                                            setNewDevice({
+                                                ...newDevice,
+                                                os: e.target.value
+                                            })
 
-                                    }} />
+                                        }} />
+                                    </div>
+                                    <div className='grow flex flex-col gap-2'>
+                                        <TextInput required title={'Type'} onChange={(e: any) => {
+                                            setNewDevice({
+                                                ...newDevice,
+                                                deviceType: e.target.value
+                                            })
+                                        }} />
+                                        <TextInput title={'MAC'} onChange={(e: any) => {
+                                            setNewDevice({
+                                                ...newDevice,
+                                                mac: e.target.value
+                                            })
+
+                                        }} />
+                                        <TextInput title={'OS version'} onChange={(e: any) => {
+                                            setNewDevice({
+                                                ...newDevice,
+                                                osVersion: e.target.value
+                                            })
+
+                                        }} />
+                                    </div>
                                 </div>
-                                <div className='grow flex flex-col gap-2'>
-                                    <TextInput required title={'Type'} onChange={(e: any) => {
-                                        setNewDevice({
-                                            ...newDevice,
-                                            deviceType: e.target.value
-                                        })
-                                    }} />
-                                    <TextInput title={'MAC'} onChange={(e: any) => {
-                                        setNewDevice({
-                                            ...newDevice,
-                                            mac: e.target.value
-                                        })
+                                <DatePickerInput title={'Last boot time'} onDatePicked={(e: any) => {
+                                    setNewDevice({
+                                        ...newDevice,
+                                        lastBootTime: Date.parse(e)
+                                    })
+                                }} selected={newDevice?.lastBootTime} />
 
-                                    }} />
-                                    <TextInput title={'OS version'} onChange={(e: any) => {
-                                        setNewDevice({
-                                            ...newDevice,
-                                            osVersion: e.target.value
-                                        })
-
-                                    }} />
-                                </div>
                             </div>
-                            <DatePickerInput title={'Last boot time'} onDatePicked={(e: any) => {
-                                setNewDevice({
-                                    ...newDevice,
-                                    lastBootTime: Date.parse(e)
-                                })
-                            }} selected={newDevice?.lastBootTime} />
+                            <DialogFooter>
 
-                        </div>
-                        <DialogFooter>
-
-                            <Button   type="submit">Submit</Button>
-                        </DialogFooter>
+                                <Button type="submit">Submit</Button>
+                            </DialogFooter>
 
                         </form>
                     </DialogContent>

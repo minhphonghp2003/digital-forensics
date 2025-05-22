@@ -27,3 +27,11 @@ export let getCaseIdsByInvestigator = async ({ contract, investigator }: any) =>
     return await contract.getCaseIdsByInvestigator(investigator);
 };
 
+
+
+
+export let addInvestigatorToCase = async ({ contract, caseId, investigator }: any) => {
+    const tx = await contract.addInvestigatorToCase(caseId, investigator);
+    await tx.wait();
+    return tx;
+}

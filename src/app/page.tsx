@@ -16,6 +16,8 @@ export default function Home() {
   let fetchUser = async () => {
     if (!account) return;
     let userResult = await getInvestigator(account.contract, account?.address || "");
+    console.log(userResult);
+    
     setUser(userResult);
     if (userResult) {
       fetchCases()

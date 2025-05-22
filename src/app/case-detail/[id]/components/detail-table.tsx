@@ -1,4 +1,5 @@
 "use client"
+import CaseInvestigators from '@/app/case-detail/[id]/components/case-investigator'
 import DeviceDetail from '@/app/case-detail/[id]/components/device'
 import HardwareDetail from '@/app/case-detail/[id]/components/hardware'
 import LogDetail from '@/app/case-detail/[id]/components/log'
@@ -25,7 +26,7 @@ function DetailTable({ caseId, investigator, account }: { caseId: any, investiga
         }
         return []
     }
-  
+
     let handleVerify = async (file: any) => {
         let hash = await hashFile(file)
         let hardwares: Hardware[] = await fetchHardwares()
@@ -50,7 +51,7 @@ function DetailTable({ caseId, investigator, account }: { caseId: any, investiga
     return (
         <div>
             <div>
-                <CustomTab onVerified={handleVerify} onFileChange={()=>{setMessage(null)}} tabs={[
+                <CustomTab onVerified={handleVerify} onFileChange={() => { setMessage(null) }} tabs={[
                     {
                         title: "Hardware",
                         content: <HardwareDetail caseId={caseId} investigator={investigator} />
@@ -66,6 +67,10 @@ function DetailTable({ caseId, investigator, account }: { caseId: any, investiga
                     {
                         title: "Log",
                         content: <LogDetail caseId={caseId} investigator={investigator} />
+                    },
+                    {
+                        title: "Investigator",
+                        content: <CaseInvestigators caseId={caseId} investigator={investigator} />
                     }
                 ]} >
                     {

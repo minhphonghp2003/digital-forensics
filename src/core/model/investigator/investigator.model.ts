@@ -1,4 +1,5 @@
 export interface Investigator {
-  createdAt: number; // uint256 => number
   nickname: string;
+  createdAt: number; // uint256 => number
+  address: string
 }
