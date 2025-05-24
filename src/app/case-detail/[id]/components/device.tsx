@@ -66,6 +66,8 @@ function DeviceDetail({ caseId, investigator }: { caseId: any, investigator: any
                 })
             }
         } catch (error) {
+            console.log(error);
+            
             setOpen(false)
             toast("Error", {
                 description: "Error occur while calling contract"

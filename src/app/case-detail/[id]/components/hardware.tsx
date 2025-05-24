@@ -104,6 +104,8 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
                 })
             }
         } catch (error) {
+            console.log(error);
+            
             setOpen(false)
             toast("Error", {
                 description: "Error occur while calling contract"

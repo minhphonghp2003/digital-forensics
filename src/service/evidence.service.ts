@@ -27,10 +27,10 @@ export let createDevice = async ({
 // Add Hardware
 export let createHardware = async ({
     contract, caseId, fileName, fileType, fileSize, hash,
-    createdDate, modifiedDate, accessDate, diskType, filePath,description
+     modifiedDate, accessDate, diskType, filePath,description
 }: any) => {
     const tx = await contract.addHardware(caseId, fileName, fileType, fileSize, hash,
-        createdDate, modifiedDate, accessDate,description, diskType, filePath);
+         modifiedDate, accessDate,description, diskType, filePath);
     await tx.wait();
     return tx;
 };
