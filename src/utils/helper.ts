@@ -31,12 +31,11 @@ export async function hashFile(file: any) {
     return hashHex;
 }
 export async function uploadFileToCloud(file: any) {
-    console.log(file);
-
     const supabaseUrl = 'https://qhxywugmcgniitjgzjqh.supabase.co'
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY ?? ""
     const supabase = createClient(supabaseUrl, supabaseKey)
-    const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_BUCKET_NAME!)?.upload("df/" + file.name, file, { upsert: true })
+    const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_BUCKET_NAME!)?.upload("df/"
+        + file.name, file, { upsert: true })
     const { data: publicUrl } = supabase
         .storage
         .from(process.env.NEXT_PUBLIC_BUCKET_NAME!)
