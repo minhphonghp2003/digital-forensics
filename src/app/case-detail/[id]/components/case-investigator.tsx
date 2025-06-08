@@ -7,6 +7,7 @@ import { getCaseInvestigatorIds } from '@/service/case.service'
 import { addInvestigatorToCase, getInvestigator } from '@/service/investigator.service'
 
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { checkIsOwner } from '@/service/ether.service'
 import { Button } from 'components/ui/button'
 import { useContext, useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -14,6 +15,7 @@ import { toast } from 'sonner'
 function CaseInvestigators({ caseId, investigator, }: { caseId: any, investigator: any, }) {
     let { account } = useContext(AccountContext)
     let [open, setOpen] = useState(false)
+    let [isOwner, setOwner] = useState(false)
     let [inv, setInv] = useState<Investigator[] | null>(null)
     let [newInv, setNewInv] = useState<{
         address: any,
@@ -22,8 +24,8 @@ function CaseInvestigators({ caseId, investigator, }: { caseId: any, investigato
     })
     let fetchDetail = async () => {
         if (account?.contract) {
-
             let ids = await getCaseInvestigatorIds({ contract: account.contract, caseId })
+            let isContractOwner = await checkIsOwner(account.contract,account.address)
             let result = []
             result = await Promise.all(ids.map(async (e: any) => {
                 let res = await getInvestigator(account.contract, e)
@@ -35,6 +37,7 @@ function CaseInvestigators({ caseId, investigator, }: { caseId: any, investigato
             }));
 
             setInv(result)
+            setOwner(isContractOwner)
         }
 
     }
@@ -77,7 +80,7 @@ function CaseInvestigators({ caseId, investigator, }: { caseId: any, investigato
             }
         })} searchKey={'address'}
             extra={
-                investigator?.includes(account?.address) && <Dialog open={open} onOpenChange={setOpen} >
+                isOwner && <Dialog open={open} onOpenChange={setOpen} >
                     <DialogTrigger asChild>
                         <Button variant="outline">Add investigator</Button>
                     </DialogTrigger>
@@ -90,7 +93,7 @@ function CaseInvestigators({ caseId, investigator, }: { caseId: any, investigato
                         </DialogHeader>
                         <form onSubmit={handleAddInvestigator}>
 
-                            <TextInput required title={'Name'} onChange={(e: any) => {
+                            <TextInput required title={'Account'} onChange={(e: any) => {
                                 setNewInv({
                                     ...newInv,
                                     address: e.target.value

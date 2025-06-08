@@ -108,6 +108,11 @@ function page() {
             }
         }
     }
+ if(!investigators?.includes(account?.address) ){
+    return <div className='text-center'>
+        Bạn không có thẩm quyền truy cập vụ án này
+    </div>
+ }
 
     return (
         <div>

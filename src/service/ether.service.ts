@@ -51,5 +51,7 @@ export let getOwner = async (contract: any) => {
 }
 export let checkIsOwner = async (contract: any, address: string) => {
     const owner = await getOwner(contract);
+    console.log(owner);
+    
     return owner.toLowerCase() === address.toLowerCase();
 }

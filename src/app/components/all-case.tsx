@@ -7,23 +7,33 @@ import { AccountContext } from '@/core/context/account.context';
 import { Case } from '@/core/model/case/case.model';
 import { caseColumns } from '@/core/table-column/case-column';
 import { createCase } from '@/service/case.service';
+import { checkIsOwner } from '@/service/ether.service';
 import { Status } from '@/utils/enum';
 import { formatDate, truncateFromMiddle } from '@/utils/helper';
 import { Button } from 'components/ui/button';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 function AllCase({ cases, userAddress }: { userAddress: any, cases?: Case[] | null }) {
     const [open, setOpen] = useState(false)
     const [title, setTitle] = useState("")
+    const [isOwner, setIsOwner] = useState(false)
     const [description, setDescription] = useState("")
     let { account, setAccount } = useContext(AccountContext)
+    useEffect(()=>{
+        if(account){
+            checkOwner(account)
+        }
+    },[account])
+    let checkOwner =async (account:any)=>{
+        setIsOwner(await checkIsOwner(account.contract,userAddress))
+    }
     let data = cases?.map((item: Case) => {
         return {
             id: item.id,
             description: truncateFromMiddle(item.description, 50),
             status: Status[item.status],
             title: item.title,
-            investigator: truncateFromMiddle(item.investigator),
+            // investigator: truncateFromMiddle(item.investigator),
             createdDate: formatDate(Number(item.createdDate) * 1000),
         }
     })
@@ -47,7 +57,7 @@ function AllCase({ cases, userAddress }: { userAddress: any, cases?: Case[] | nu
 
             <CustomTable searchKey="id" btnName="Add" columns={caseColumns} title="All cases" data={data}
                 extra={
-                    userAddress == account.address && <Dialog open={open} onOpenChange={setOpen} >
+                    isOwner && <Dialog open={open} onOpenChange={setOpen} >
                         <DialogTrigger asChild>
                             <Button variant="outline">Add case</Button>
                         </DialogTrigger>
