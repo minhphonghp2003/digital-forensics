@@ -108,11 +108,19 @@ function page() {
             }
         }
     }
- if(!investigators?.includes(account?.address) ){
-    return <div className='text-center'>
-        Bạn không có thẩm quyền truy cập vụ án này
-    </div>
- }
+    if (!investigators?.includes(account?.address)) {
+        return <div>
+            <div className="wrapper">
+                <div className="landing-page">
+                    <img src={"https://www.awardspace.com/wp-content/uploads/2021/01/403-forbidden-1.jpg"} style={{
+                        width:"400px"
+                    }} />
+                    <p className='text-xl font-bold'> 403 Error</p>
+                    <p className=''>Bạn không có thẩm quyền truy cập vụ án này.</p>
+                </div>
+            </div>
+        </div>
+    }
 
     return (
         <div>
