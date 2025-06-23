@@ -124,6 +124,7 @@ function HardwareDetail({ caseId, investigator }: { caseId: any, investigator: a
                         fileType: e.fileType,
                         fileSize: e.fileSize,
                         hash: e.hash,
+                        description: e.description,
                         accessDate: (Number(e.accessDate)),
                         formatedAccessDate: formatDate((Number(e.accessDate))),
                         status: Status[e.status],
